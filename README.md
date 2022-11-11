@@ -6,11 +6,20 @@
 1. 对于模型的使用，请参照官方stable-diffusion的模型license的说明，这里不在赘述，请自觉遵守
 2. 目前的实现可用，但非常不稳定，结果存在“盲盒”性，大多数情况下都会返回无意义的结果
 3. 该代码只使用cpu，需要约19G的内存，请最少为它准备20G的内存
+4. 目前测试出来的结果是，step在5以内，结果都不会崩，但图的质量一般
 
 ## 一些结果
 ![image](./resources/result_2_42.png)
 
-step:2 seed:42 的结果，由于目前采样器不稳定，加step反而会崩，将就看，但能说明代码是没有大问题的
+step:2 seed:42，由于目前采样器不稳定，加step反而会崩，将就看，但能说明代码是没有大问题的
+
+![image](./resources/result_5_42.png)
+
+step:5 seed:42
+
+![image](./resources/result_5_1668147633.png)
+
+step:5 seed:1668147633
 
 ## 实现细节
 1. stable-diffusion就三个步骤：
