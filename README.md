@@ -2,6 +2,8 @@
 
 基于c++版ncnn实现的“屎山+盲盒”版stable-diffusion
 
+知乎介绍文章: https://zhuanlan.zhihu.com/p/582552276
+
 ## 说明
 1. 对于模型的使用，请参照官方stable-diffusion的模型license的说明，这里不在赘述，请自觉遵守
 2. 目前的实现可用，但非常不稳定，结果存在“盲盒”性，大多数情况下都会返回无意义的结果
