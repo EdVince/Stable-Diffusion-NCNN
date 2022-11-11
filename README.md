@@ -8,7 +8,8 @@
 3. 该代码只使用cpu，需要约19G的内存，请最少为它准备20G的内存
 
 ## 一些结果
-[!image](./resources/result_2_42.png)
+![image](./resources/result_2_42.png)
+
 step:2 seed:42 的结果，由于目前采样器不稳定，加step反而会崩，将就看，但能说明代码是没有大问题的
 
 ## 实现细节
