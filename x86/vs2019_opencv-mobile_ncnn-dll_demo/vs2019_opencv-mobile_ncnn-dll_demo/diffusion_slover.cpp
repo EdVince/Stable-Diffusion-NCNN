@@ -2,13 +2,13 @@
 
 DiffusionSlover::DiffusionSlover()
 {
-	opt.use_packing_layout = true;
-	opt.use_fp16_arithmetic = true;
-	opt.use_fp16_packed = true;
-	opt.use_fp16_storage = true;
-	opt.num_threads = 8;
-
-	net.opt = opt;
+	net.opt.use_vulkan_compute = false;
+	net.opt.use_winograd_convolution = false;
+	net.opt.use_sgemm_convolution = false;
+	net.opt.use_fp16_packed = true;
+	net.opt.use_fp16_storage = true;
+	net.opt.use_fp16_arithmetic = true;
+	net.opt.use_packing_layout = true;
 	net.load_param("assets/UNetModel-fp16.param");
 	net.load_model("assets/UNetModel-fp16.bin");
 
@@ -62,36 +62,32 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 
 	ncnn::Mat denoised_cond;
 	{
-		ncnn::Extractor ex = net.create_extractor();
-		ex.set_light_mode(TRUE);
-
 		ncnn::Mat input0;
 		input0.clone_from(input);
 
+		ncnn::Extractor ex = net.create_extractor();
+		ex.set_light_mode(true);
 		ex.input("in0", input0);
 		ex.input("in1", t_mat);
 		ex.input("in2", cond);
 		ex.input("c_in", c_in_mat);
 		ex.input("c_out", c_out_mat);
 		ex.extract("outout", denoised_cond);
-
 	}
 
 	ncnn::Mat denoised_uncond;
 	{
-		ncnn::Extractor ex = net.create_extractor();
-		ex.set_light_mode(TRUE);
-
 		ncnn::Mat input1;
 		input1.clone_from(input);
 
+		ncnn::Extractor ex = net.create_extractor();
+		ex.set_light_mode(true);
 		ex.input("in0", input1);
 		ex.input("in1", t_mat);
 		ex.input("in2", uncond);
 		ex.input("c_in", c_in_mat);
 		ex.input("c_out", c_out_mat);
 		ex.extract("outout", denoised_uncond);
-
 	}
 
 	for (int c = 0; c < 4; c++) {
@@ -129,9 +125,12 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 	// sample_euler_ancestral
 	{
 		for (int i = 0; i < sigma.size() - 1; i++) {
-			cout << "step:" << i << endl;
+			cout << "step:" << i << "\t\t";
 
+			double t1 = ncnn::get_current_time();
 			ncnn::Mat denoised = CFGDenoiser_CompVisDenoiser(x_mat, sigma[i], c, uc);
+			double t2 = ncnn::get_current_time();
+			cout << t2 - t1 << "ms" << endl;
 
 			float sigma_up = min(sigma[i + 1], sqrt(sigma[i + 1] * sigma[i + 1] * (sigma[i] * sigma[i] - sigma[i + 1] * sigma[i + 1]) / (sigma[i] * sigma[i])));
 			float sigma_down = sqrt(sigma[i + 1] * sigma[i + 1] - sigma_up * sigma_up);

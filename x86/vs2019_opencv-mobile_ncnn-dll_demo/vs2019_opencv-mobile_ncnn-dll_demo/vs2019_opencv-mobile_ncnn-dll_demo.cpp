@@ -31,7 +31,7 @@ int main()
 	//cout << "[positive prompt]:" << positive_prompt << endl;
 	//cout << "[negative prompt]:" << negative_prompt << endl;
 
-	step = 2;
+	step = 5;
 	seed = 42;
 	positive_prompt = "floating hai, portrait, 1 girl, cute face, hidden hands, asymmetrical bangs, beautiful detailed eyes, eye shadow, blank stare, big top sleeves, hair ornament, ribbons, bowties, buttons, big breast, pleated skirt, masterpiece, best quality, colorful";
 	negative_prompt = "lowres, bad anatomy, bad hands, text error, missing fingers, extra digits, fewer digits, cropped, worst quality, low quality, standard quality, jpeg artifacts, signature, watermark, username, blurry";

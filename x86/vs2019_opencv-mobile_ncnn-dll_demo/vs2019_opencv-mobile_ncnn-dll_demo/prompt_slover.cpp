@@ -3,6 +3,13 @@
 PromptSlover::PromptSlover()
 {
 	// ¼ÓÔØCLIPÄ£ÐÍ
+	net.opt.use_vulkan_compute = false;
+	net.opt.use_winograd_convolution = false;
+	net.opt.use_sgemm_convolution = false;
+	net.opt.use_fp16_packed = true;
+	net.opt.use_fp16_storage = true;
+	net.opt.use_fp16_arithmetic = true;
+	net.opt.use_packing_layout = true;
 	net.load_param("assets/FrozenCLIPEmbedder-fp16.param");
 	net.load_model("assets/FrozenCLIPEmbedder-fp16.bin");
 
@@ -117,6 +124,7 @@ ncnn::Mat PromptSlover::get_conditioning(string& prompt)
 				}
 
 				ncnn::Extractor ex = net.create_extractor();
+				ex.set_light_mode(true);
 				ex.input("token", token_mat);
 				ex.input("multiplier", multiplier_mat);
 				ex.input("cond", conds);

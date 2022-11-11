@@ -8,11 +8,10 @@
 #include <map>
 #include <math.h>
 #include <net.h>
-#include "prompt_slover.h"
-#include "decoder_slover.h"
 #include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <time.h>
+#include "benchmark.h"
 using namespace std;
 
 class DiffusionSlover
@@ -29,6 +28,5 @@ private:
 private:
     float log_sigmas[1000] = { 0 };
 
-    ncnn::Option opt;
     ncnn::Net net;
 };

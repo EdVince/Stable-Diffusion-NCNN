@@ -8,7 +8,6 @@
 #include <map>
 #include <math.h>
 #include <net.h>
-#include "prompt_slover.h"
 #include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <time.h>
@@ -28,6 +27,5 @@ private:
     const float _mean_[3] = { -1.0f, -1.0f, -1.0f };
     const float _norm_[3] = { 127.5f, 127.5f, 127.5f };
 
-    ncnn::Option opt;
     ncnn::Net net;
 };
