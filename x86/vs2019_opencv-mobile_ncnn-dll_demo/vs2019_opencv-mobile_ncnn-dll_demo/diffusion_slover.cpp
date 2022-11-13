@@ -23,7 +23,7 @@ ncnn::Mat DiffusionSlover::randn_4_64_64(int seed)
 	cv::RNG rng(seed);
 	rng.fill(cv_x, cv::RNG::NORMAL, 0, 1);
 	ncnn::Mat x_mat(64, 64, 4, (void*)cv_x.data);
-	return x_mat;
+	return x_mat.clone();
 }
 
 ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float sigma, ncnn::Mat cond, ncnn::Mat uncond)
@@ -62,12 +62,9 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 
 	ncnn::Mat denoised_cond;
 	{
-		ncnn::Mat input0;
-		input0.clone_from(input);
-
 		ncnn::Extractor ex = net.create_extractor();
 		ex.set_light_mode(true);
-		ex.input("in0", input0);
+		ex.input("in0", input);
 		ex.input("in1", t_mat);
 		ex.input("in2", cond);
 		ex.input("c_in", c_in_mat);
@@ -77,12 +74,9 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 
 	ncnn::Mat denoised_uncond;
 	{
-		ncnn::Mat input1;
-		input1.clone_from(input);
-
 		ncnn::Extractor ex = net.create_extractor();
 		ex.set_light_mode(true);
-		ex.input("in0", input1);
+		ex.input("in0", input);
 		ex.input("in1", t_mat);
 		ex.input("in2", uncond);
 		ex.input("c_in", c_in_mat);
