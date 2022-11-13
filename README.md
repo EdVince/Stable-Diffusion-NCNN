@@ -6,38 +6,23 @@
 
 ## 说明
 1. 对于模型的使用，请参照官方stable-diffusion的模型license的说明，这里不在赘述，请自觉遵守
-2. 目前的实现可用，但非常不稳定，结果存在“盲盒”性，大多数情况下都会返回无意义的结果
-3. 该代码只使用cpu，经过调整，只需要8G内存！！！
-4. 目前测试出来的结果是，step在5以内，结果都不会怎么会崩，但图的质量一般
+2. 该代码只使用cpu，经过调整，只需要8G内存！！！
+3. 感谢nihui的pr，目前出图质量稳定(咒语要写得好)，欢迎尝试
 
 ## 一些结果
-![image](./resources/result_2_42.png)
+![image](./resources/result_15_42.png)
 
-step:2 seed:42，由于目前采样器不稳定，加step反而会崩，将就看，但能说明代码是没有大问题的
+![image](./resources/result_15_42_1.png)
 
-![image](./resources/result_5_1668147633.png)
+![image](./resources/result_15_1668336058.png)
 
-step:5 seed:1668147633
+![image](./resources/result_15_1668336279.png)
 
-![image](./resources/result_5_42_0.png)
+![image](./resources/result_15_1668336723.png)
 
-step:5 seed:42
+![image](./resources/result_15_1668337168.png)
 
-![image](./resources/result_5_42_1.png)
-
-step:5 seed:42
-
-![image](./resources/result_5_42_2.png)
-
-step:5 seed:42
-
-![image](./resources/result_5_42_3.png)
-
-step:5 seed:42
-
-![image](./resources/result_5_42_4.png)
-
-step:5 seed:42
+![image](./resources/result_15_1668337577.png)
 
 ## 实现细节
 1. stable-diffusion就三个步骤：
@@ -52,18 +37,13 @@ step:5 seed:42
     4. prompt：支持positive和negative
 
 ## 代码细节
-1. 由于目前结果不稳定，因此不分发exe了，大家自己编译吧
+1. 由于目前速度不咋快，因此不分发exe了，大家自己编译吧
 2. 从[百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666)下载三个bin放到对应的assets目录下进行编译
 3. 代码里面给了一个简单的测试prompt
 
 ## 存在问题
-1. 采样算法不稳定，目前用的“euler ancestral”十分不稳定，导致几乎90%的结果都是无意义的
-2. 有很多的magic number，调一调结果又会翻天覆地
-3. 慢，需要gpu的版本
-
-## 可优化点
-1. 使用更稳定的采样算法（最迫切需求）
-2. 使用更好的随机数策略
+1. 对prompt很敏感，要想出图好，prompt就得写得好
+2. 速度较慢，一个step在5~10s不等
 
 ## 参考
 1. [ncnn](https://github.com/Tencent/ncnn)

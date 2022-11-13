@@ -31,10 +31,10 @@ int main()
 	//cout << "[positive prompt]:" << positive_prompt << endl;
 	//cout << "[negative prompt]:" << negative_prompt << endl;
 
-	step = 5;
+	step = 15;
 	seed = 42;
-	positive_prompt = "floating hai, portrait, 1 girl, cute face, hidden hands, asymmetrical bangs, beautiful detailed eyes, eye shadow, blank stare, big top sleeves, hair ornament, ribbons, bowties, buttons, big breast, pleated skirt, masterpiece, best quality, colorful";
-	negative_prompt = "lowres, bad anatomy, bad hands, text error, missing fingers, extra digits, fewer digits, cropped, worst quality, low quality, standard quality, jpeg artifacts, signature, watermark, username, blurry";
+	positive_prompt = "floating hair, portrait, ((loli)), ((one girl)), cute face, hidden hands, asymmetrical bangs, beautiful detailed eyes, eye shadow, hair ornament, ribbons, bowties, buttons, pleated skirt, (((masterpiece))), ((best quality)), colorful";
+	negative_prompt = "((part of the head)), ((((mutated hands and fingers)))), deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, Octane renderer, lowres, bad anatomy, bad hands, text";
 
 	cout << "----------------[init]--------------------" << endl;
 	PromptSlover prompt_slover;
