@@ -45,6 +45,38 @@
 1. 对prompt很敏感，要想出图好，prompt就得写得好
 2. 速度较慢，一个step在5~10s不等
 
+## ONNX模型
+
+这里把stable diffusion用到的三个onnx模型放出来，方便大家做一些有意思的工作，模型也在上面的百度网盘链接里面
+
+### 使用声明
+1. 请自觉遵守的stable diffusion模型的协议，不要用于非法用途！
+2. 如果你用这些onnx做了开源项目，还请来踢一踢我，我去给大佬捧个人场
+
+### 使用说明
+一共有三个模型，按照使用顺序依次为：FrozenCLIPEmbedder、UNetModel、AutoencoderKL。使用方法可以参考ncnn的代码。但ncnn中使用的模型，相比于onnx模型，还额外合并了一些辅助计算用以加速整体代码，下面是ncnn模型和onnx模型的输入输出对齐说明：
+
+1. FrozenCLIPEmbedder
+```
+ncnn输入输出: token, multiplier, cond, conds
+onnx输入输出: onnx::Reshape_0, 2271
+
+z = onnx(onnx::Reshape_0=token)
+origin_mean = z.mean()
+z *= multiplier
+new_mean = z.mean()
+z *= origin_mean / new_mean
+conds = torch.concat([cond,z], dim=-2)
+```
+2. UNetModel
+```
+ncnn输入输出: in0, in1, in2, c_in, c_out, outout
+onnx输入输出: x, t, cc, out
+
+outout = in0 + onnx(x=in0 * c_in, t=in1, cc=in2) * c_out
+```
+3. AutoencoderKL模型ncnn与onnc一致，直接使用即可
+
 ## 参考
 1. [ncnn](https://github.com/Tencent/ncnn)
 2. [opencv-mobile](https://github.com/nihui/opencv-mobile)
