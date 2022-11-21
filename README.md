@@ -108,7 +108,7 @@ outout = in0 + onnx(x=in0 * c_in, t=in1, cc=in2) * c_out
 
 
 
-## Preferences
+## References
 
 1. [ncnn](https://github.com/Tencent/ncnn)
 2. [opencv-mobile](https://github.com/nihui/opencv-mobile)
