@@ -52,7 +52,7 @@ Zhihu: https://zhuanlan.zhihu.com/p/582552276
 ## Code Details
 
 1. Since the current running speed is not so fast, the exe file wasn't uploaded, please compile it yourself.
-2. Download the three bin files from  [百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp =sharing) ,   put them in the corresponding `assets` directory for compilation
+2. Download the three bin files from  [百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing) ,   put them in the corresponding `assets` directory for compilation
 3. A simple test prompt is given in this repo.
 
 
