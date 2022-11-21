@@ -38,7 +38,7 @@
 
 ## 代码细节
 1. 由于目前速度不咋快，因此不分发exe了，大家自己编译吧
-2. 从[百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666)下载三个bin放到对应的assets目录下进行编译
+2. 从[百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666)或[Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)下载三个bin放到对应的assets目录下进行编译
 3. 代码里面给了一个简单的测试prompt
 
 ## 存在问题
