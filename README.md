@@ -11,12 +11,12 @@ Zhihu: https://zhuanlan.zhihu.com/p/582552276
 ## Usages
 
 1. To use the model, please refer to the description of the official stable-diffusion model license, which will not be repeated here, please abide by it consciously.
-2. The code only uses CPU, after adjustment, it only needs 8G memory!!!
-3. Thanks to nihui's pr, the quality of the current output is stable (spells must be written well, you can refer to *The Code of Quintessence*),  welcome to try.
+2. The code only uses CPU, after adjustment, it only needs 8G RAM!!!
+3. Thanks to the pr from nihui, the quality of the current output is stable (prompt must be written well, you can refer to *The Code of Quintessence*),  welcome to try.
 
 
 
-## Some Output
+## Some Results
 
 ![image](./resources/result_15_42.png)
 
@@ -60,20 +60,20 @@ Zhihu: https://zhuanlan.zhihu.com/p/582552276
 ## Some Issues
 
 1. Very sensitive to prompts, if you want to make a high quality picture, the prompt must be written well.
-2. Slow, an iterative step ranges from 5-10s.
+2. Slow, one iterative step costs about 5-10second.
 
 
 
 ## ONNX Model
 
-I've uploaded the three onnx models used by Stable-Diffusion, so that you can do some  interesting work.
+I've uploaded the three onnx models used by Stable-Diffusion, so that you can do some interesting work.
 
 You can find them from the link above.
 
 ### Statements
 
-1. Please  abide by the agreement of the stable diffusion model consciously, and DO NOT use it for illegal purposes!
-2. If you use these onnx models to make open source projects, please inform me and I'll follow and look forward for your next work :)
+1. Please abide by the agreement of the stable diffusion model consciously, and DO NOT use it for illegal purposes!
+2. If you use these onnx models to make open source projects, please inform me and I'll follow and look forward for your next great work :)
 
 ### Instructions
 
