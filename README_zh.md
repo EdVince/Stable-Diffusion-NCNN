@@ -1,6 +1,6 @@
 # Stable Diffusion NCNN
 
-English[https://github.com/EdVince/Stable-Diffusion-NCNN/blob/main/README.md] | 中文
+[English](https://github.com/EdVince/Stable-Diffusion-NCNN/blob/main/README.md) | 中文
 
 基于c++版ncnn实现的“屎山+盲盒”版stable-diffusion
 
