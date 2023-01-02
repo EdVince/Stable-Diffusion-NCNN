@@ -13,10 +13,14 @@ Zhihu: https://zhuanlan.zhihu.com/p/582552276
 1. To use the model, please refer to the description of the official stable-diffusion model license, which will not be repeated here, please abide by it consciously.
 2. The code only uses CPU, after adjustment, it only needs 8G RAM!!!
 3. Thanks to the pr from nihui, the quality of the current output is stable (prompt must be written well, you can refer to *The Code of Quintessence*),  welcome to try.
+4. Unbelievable, we offer the android apk, you can download it from the link below.
 
 
 
 ## Some Results
+
+Note: For android APP, it needs about 7G RAM and 20s/step in Snapdragon865 (I test it by Galaxy S20 with 12G and Snapdragon865) 
+![image](./resources/android.jpg)
 
 ![image](./resources/result_15_42.png)
 
@@ -51,9 +55,10 @@ Zhihu: https://zhuanlan.zhihu.com/p/582552276
 
 ## Code Details
 
-1. Since the current running speed is not so fast, the exe file wasn't uploaded, please compile it yourself.
-2. Download the three bin files from  [百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing) ,   put them in the corresponding `assets` directory for compilation
-3. A simple test prompt is given in this repo.
+1. Since the current running speed is not so fast, the x86 exe file wasn't uploaded, please compile it yourself or try the android app.
+2. All model and apk are available in [百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
+3. if you want to complie the project by yourself, please download the corresponding model and put them to the `assets` directory
+4. A simple test prompt is given in this repo.
 
 
 
@@ -99,14 +104,6 @@ onnx (input & output): x, t, cc, out
 
 outout = in0 + onnx(x=in0 * c_in, t=in1, cc=in2) * c_out
 ```
-
-
-
-
-
-
-
-
 
 ## References
 

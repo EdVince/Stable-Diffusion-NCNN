@@ -10,8 +10,13 @@
 1. 对于模型的使用，请参照官方stable-diffusion的模型license的说明，这里不在赘述，请自觉遵守
 2. 该代码只使用cpu，经过调整，只需要8G内存！！！
 3. 感谢nihui的pr，目前出图质量稳定(咒语要写得好)，欢迎尝试
+4. 提供了安卓APK，可以从下面的链接下载得到
 
 ## 一些结果
+
+Note：APP大概要7G内存，在我的测试机骁龙865+12G内存的三星Galaxy S20上，一个迭代要20s，要尝试的话请做好心理准备
+![image](./resources/android.jpg)
+
 ![image](./resources/result_15_42.png)
 
 ![image](./resources/result_15_42_1.png)
@@ -40,8 +45,9 @@
 
 ## 代码细节
 1. 由于目前速度不咋快，因此不分发exe了，大家自己编译吧
-2. 从[百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666)或[Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)下载三个bin放到对应的assets目录下进行编译
-3. 代码里面给了一个简单的测试prompt
+2. 所有的模型和安卓安装包都可以从[百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666)或[Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)下载得到
+3. 要自己编译的话就下载对应的bin文件，并放到assets目录下
+4. 代码里面给了一个简单的测试prompt
 
 ## 存在问题
 1. 对prompt很敏感，要想出图好，prompt就得写得好
