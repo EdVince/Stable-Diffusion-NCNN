@@ -1,0 +1,9 @@
+# ninja log v5
+0	1247	1672667841	CMakeFiles/makeup.dir/parsing.cpp.o	31e9221dc134457
+1	1299	1672667841	CMakeFiles/makeup.dir/transfer.cpp.o	7f1cab1e272bfaf4
+3	1398	1672667841	CMakeFiles/makeup.dir/decoder_slover.cpp.o	3aa280c3a9f4848a
+2	1641	1672667842	CMakeFiles/makeup.dir/blazeface.cpp.o	dd4c566bfc8e18a2
+2	1776	1672667842	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	f1ac747c52a9e337
+0	1803	1672667842	CMakeFiles/makeup.dir/makeup_jni.cpp.o	6b12f245f62ecd25
+2	4091	1672667844	CMakeFiles/makeup.dir/prompt_slover.cpp.o	45329e4b960ef34e
+4091	4328	1672667844	/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/build/intermediates/cmake/release/obj/arm64-v8a/libmakeup.so	2177650ade0e82f4

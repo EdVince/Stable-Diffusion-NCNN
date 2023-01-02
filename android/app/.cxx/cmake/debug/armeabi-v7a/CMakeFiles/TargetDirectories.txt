@@ -1,0 +1,3 @@
+/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/makeup.dir
