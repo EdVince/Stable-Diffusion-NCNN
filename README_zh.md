@@ -5,6 +5,7 @@
 基于c++版ncnn实现的“屎山+盲盒”版stable-diffusion
 
 知乎介绍文章: https://zhuanlan.zhihu.com/p/582552276
+
 哔哩哔哩演示视频: https://www.bilibili.com/video/BV15g411x7Hc
 
 ## 说明
@@ -16,6 +17,7 @@
 ## 一些结果
 
 Note：APP大概要7G内存，在我的测试机骁龙865+12G内存的三星Galaxy S20上，一个迭代要20s，要尝试的话请做好心理准备
+
 ![image](./resources/video.gif)
 
 ![image](./resources/result_15_42.png)

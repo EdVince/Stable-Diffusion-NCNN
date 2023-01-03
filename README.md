@@ -5,6 +5,7 @@ English | [中文](https://github.com/EdVince/Stable-Diffusion-NCNN/blob/main/RE
 Stable-Diffusion implemented by [NCNN](https://github.com/Tencent/ncnn) framework based on C++ (Shit Mountain + Blind Box ver.)
 
 Zhihu: https://zhuanlan.zhihu.com/p/582552276
+
 BiliBili: https://www.bilibili.com/video/BV15g411x7Hc
 
 
@@ -20,6 +21,7 @@ BiliBili: https://www.bilibili.com/video/BV15g411x7Hc
 ## Some Results
 
 Note: For android APP, it needs about 7G RAM and 20s/step in Snapdragon865 (I test it by Galaxy S20 with 12G and Snapdragon865) 
+
 ![image](./resources/video.gif)
 
 ![image](./resources/result_15_42.png)
