@@ -1,46 +1,31 @@
 # Stable Diffusion-NCNN
 
-English | [中文](https://github.com/EdVince/Stable-Diffusion-NCNN/blob/main/README_zh.md)
-
-Stable-Diffusion implemented by [NCNN](https://github.com/Tencent/ncnn) framework based on C++ (Shit Mountain + Blind Box ver.)
+Stable-Diffusion implemented by [ncnn](https://github.com/Tencent/ncnn) framework based on C++ 
 
 Zhihu: https://zhuanlan.zhihu.com/p/582552276
 
-BiliBili: https://www.bilibili.com/video/BV15g411x7Hc
+Video: https://www.bilibili.com/video/BV15g411x7Hc
 
+***Performance (time pre-it and ram)***
+| per-it | i7-12700 | Snapdragon865 |
+| ------ | -------- | ------------- |
+| slow   | 5.3s/10G | 20s/7G        |
+| fast   | 3.1s/16G |               |
 
-## Usages
+## News
+2023-01-04: merge and finish the mha op in x86, enable fast gelu
 
-1. To use the model, please refer to the description of the official stable-diffusion model license, which will not be repeated here, please abide by it consciously.
-2. The code only uses CPU, after adjustment, it only needs 8G RAM!!!
-3. Thanks to the pr from nihui, the quality of the current output is stable (prompt must be written well, you can refer to *The Code of Quintessence*),  welcome to try.
-4. Unbelievable, we offer the android apk, you can download it from the link below.
+## Demo
 
+![image](./resources/image.png)
 
-
-## Some Results
-
-Note: For android APP, it needs about 7G RAM and 20s/step in Snapdragon865 (I test it by Galaxy S20 with 12G and Snapdragon865) 
-
-![image](./resources/video.gif)
-
-![image](./resources/result_15_42.png)
-
-![image](./resources/result_15_42_1.png)
-
-![image](./resources/result_15_1668336058.png)
-
-![image](./resources/result_15_1668336279.png)
-
-![image](./resources/result_15_1668336723.png)
-
-![image](./resources/result_15_1668337168.png)
-
-![image](./resources/result_15_1668337577.png)
-
-
+<p align="center">
+  <img src="./resources/android.jpg" width="320x">
+</p>
 
 ## Implementation Details
+
+Note: Please comply with the requirements of the SD model and do not use it for illegal purposes
 
 1. Three main steps of Stable-Diffusion：
     1. CLIP: text-embedding
@@ -53,36 +38,29 @@ Note: For android APP, it needs about 7G RAM and 20s/step in Snapdragon865 (I te
     4. Denoiser：CFGDenoiser, CompVisDenoiser
     4. Prompt：positive & negative, both supported :)
 
-
-
 ## Code Details
+All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
 
-1. Since the current running speed is not so fast, the x86 exe file wasn't uploaded, please compile it yourself or try the android app.
-2. All model and apk are available in [百度网盘](https://pan.baidu.com/s/1kO8HtTZRcyDbzA32ZzafSQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
-3. if you want to complie the project by yourself, please download the corresponding model and put them to the `assets` directory
-4. A simple test prompt is given in this repo.
+### Complie for x86
+1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
+2. open the vs2019 project and compile the release&x64
 
+### Compile for android
+1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-fp16``` and put them to ```assets``` folder
+2. open the vs2019 project and compile the release&x64
 
-
-## Some Issues
-
-1. Very sensitive to prompts, if you want to make a high quality picture, the prompt must be written well.
-2. Slow, one iterative step costs about 5-10second.
-
-
-
-## ONNX Model
+### ONNX Model
 
 I've uploaded the three onnx models used by Stable-Diffusion, so that you can do some interesting work.
 
 You can find them from the link above.
 
-### Statements
+#### Statements
 
 1. Please abide by the agreement of the stable diffusion model consciously, and DO NOT use it for illegal purposes!
 2. If you use these onnx models to make open source projects, please inform me and I'll follow and look forward for your next great work :)
 
-### Instructions
+#### Instructions
 
 1. FrozenCLIPEmbedder
 
