@@ -3,8 +3,8 @@
 DiffusionSlover::DiffusionSlover()
 {
 	net.opt.use_vulkan_compute = false;
-	net.opt.use_winograd_convolution = false;
-	net.opt.use_sgemm_convolution = false;
+	net.opt.use_winograd_convolution = true;
+	net.opt.use_sgemm_convolution = true;
 	net.opt.use_fp16_packed = true;
 	net.opt.use_fp16_storage = true;
 	net.opt.use_fp16_arithmetic = true;

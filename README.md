@@ -23,6 +23,26 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
   <img src="./resources/android.jpg" width="320x">
 </p>
 
+## Out of box
+
+All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
+
+### x86 exe
+1. enter folder [exe](./x86/exe)
+2. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
+3. set up your config in ```magic.txt```, each line are:
+    1. step number (15 is noe bad)
+    2. seed number (set 0 to be random)
+    3. positive prompt
+    4. negative prompt
+4. run ```fast_but_high_ram.exe``` or ```slow_but_low_ram.exe```, the fast one is fast but with about 16G ram, the slow one is slow but only with 10G ram
+
+### android apk
+1. download an install the apk from the link
+2. in the top, the first one is step and the second one is seed
+3. int the bottom, the top one the positive prompt and the bottom one negative prompt (set empty to enable the default prompt)
+4. note: the apk needs 7G ram, and run very slow and power consumption
+
 ## Implementation Details
 
 Note: Please comply with the requirements of the SD model and do not use it for illegal purposes
@@ -39,7 +59,6 @@ Note: Please comply with the requirements of the SD model and do not use it for 
     4. Prompt：positive & negative, both supported :)
 
 ## Code Details
-All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
 
 ### Complie for x86
 1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
