@@ -47,7 +47,7 @@ All models and exe file you can download from [百度网盘](https://pan.baidu.c
 
 ### Compile for android
 1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-fp16``` and put them to ```assets``` folder
-2. open the vs2019 project and compile the release&x64
+2. open android studio and run the project
 
 ### ONNX Model
 
