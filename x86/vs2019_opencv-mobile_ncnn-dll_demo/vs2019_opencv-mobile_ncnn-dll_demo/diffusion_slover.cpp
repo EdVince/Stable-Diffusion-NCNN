@@ -9,8 +9,8 @@ DiffusionSlover::DiffusionSlover()
 	net.opt.use_fp16_storage = true;
 	net.opt.use_fp16_arithmetic = true;
 	net.opt.use_packing_layout = true;
-	net.load_param("assets/UNetModel-fp16.param");
-	net.load_model("assets/UNetModel-fp16.bin");
+	net.load_param("assets/UNetModel-MHA-fp16.param");
+	net.load_model("assets/UNetModel-MHA-fp16.bin");
 
 	ifstream in("assets/log_sigmas.bin", ios::in | ios::binary);
 	in.read((char*)&log_sigmas, sizeof log_sigmas);

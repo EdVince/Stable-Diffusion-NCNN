@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\opencv-mobile-4.5.1-windows-vs2019\x64\include;.\ncnn-20220729-full-source\build\install\include\ncnn</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\opencv-mobile-4.5.1-windows-vs2019\x64\include;.\ncnn\build\install\include\ncnn</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -141,7 +141,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\opencv-mobile-4.5.1-windows-vs2019\x64\x64\vc16\staticlib;.\ncnn-20220729-full-source\build\install\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\opencv-mobile-4.5.1-windows-vs2019\x64\x64\vc16\staticlib;.\ncnn\build\install\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>ncnn.lib;opencv_core451.lib;opencv_features2d451.lib;opencv_highgui451.lib;opencv_imgproc451.lib;opencv_photo451.lib;opencv_video451.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

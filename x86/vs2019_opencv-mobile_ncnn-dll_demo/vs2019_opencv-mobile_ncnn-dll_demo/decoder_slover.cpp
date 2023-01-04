@@ -4,10 +4,11 @@ DecodeSlover::DecodeSlover()
 {
 	net.opt.use_vulkan_compute = false;
 	net.opt.use_winograd_convolution = false;
-	net.opt.use_sgemm_convolution = false;
-	net.opt.use_fp16_packed = true;
-	net.opt.use_fp16_storage = true;
-	net.opt.use_fp16_arithmetic = true;
+	net.opt.use_sgemm_convolution = true;
+	net.opt.use_fp16_packed = false;
+	net.opt.use_fp16_storage = false;
+	net.opt.use_fp16_arithmetic = false;
+	net.opt.use_bf16_storage = true;
 	net.opt.use_packing_layout = true;
 	net.load_param("assets/AutoencoderKL-fp16.param");
 	net.load_model("assets/AutoencoderKL-fp16.bin");
