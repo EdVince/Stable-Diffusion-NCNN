@@ -17,10 +17,12 @@ using namespace std;
 
 int main()
 {
-	int step, seed;
+	int size, mode, step, seed;
 	string positive_prompt, negative_prompt;
 
 	// default setting
+	size = 256;
+	mode = 0;
 	step = 15;
 	seed = 42;
 	positive_prompt = "floating hair, portrait, ((loli)), ((one girl)), cute face, hidden hands, asymmetrical bangs, beautiful detailed eyes, eye shadow, hair ornament, ribbons, bowties, buttons, pleated skirt, (((masterpiece))), ((best quality)), colorful";
@@ -35,14 +37,16 @@ int main()
 	else {
 		string content = "";
 		int i = 0;
-		for (i = 0; i < 4; i++) {
+		for (i = 0; i < 6; i++) {
 			if (getline(magic, content)) {
 				switch (i)
 				{
-				case 0:step = stoi(content);
-				case 1:seed = stoi(content);
-				case 2:positive_prompt = content;
-				case 3:negative_prompt = content;
+				case 0:size = stoi(content);
+				case 1:mode = stoi(content);
+				case 2:step = stoi(content);
+				case 3:seed = stoi(content);
+				case 4:positive_prompt = content;
+				case 5:negative_prompt = content;
 				default:break;
 				}
 			}
@@ -50,7 +54,7 @@ int main()
 				break;
 			}
 		}
-		if (i != 4) {
+		if (i != 6) {
 			cout << "magic.txt has wrong format, please fix it" << endl;
 			return 0;
 		}
@@ -64,8 +68,8 @@ int main()
 	// stable diffusion
 	cout << "----------------[init]--------------------" << endl;
 	PromptSlover prompt_slover;
-	DiffusionSlover diffusion_slover;
-	DecodeSlover decode_slover;
+	DiffusionSlover diffusion_slover(size, mode);
+	DecodeSlover decode_slover(size);
 
 	cout << "----------------[prompt]------------------" << endl;
 	ncnn::Mat cond = prompt_slover.get_conditioning(positive_prompt);
@@ -78,7 +82,7 @@ int main()
 	ncnn::Mat x_samples_ddim = decode_slover.decode(sample);
 
 	cout << "----------------[save]--------------------" << endl;
-	cv::Mat image(512, 512, CV_8UC3);
+	cv::Mat image(size, size, CV_8UC3);
 	x_samples_ddim.to_pixels(image.data, ncnn::Mat::PIXEL_RGB2BGR);
 	cv::imwrite("result_" + to_string(step) + "_" + to_string(seed) + ".png", image);
 

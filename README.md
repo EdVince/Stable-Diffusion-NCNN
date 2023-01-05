@@ -7,12 +7,14 @@ Zhihu: https://zhuanlan.zhihu.com/p/582552276
 Video: https://www.bilibili.com/video/BV15g411x7Hc
 
 ***Performance (time pre-it and ram)***
-| per-it | i7-12700 | Snapdragon865 |
-| ------ | -------- | ------------- |
-| slow   | 5.3s/10G | 20s/7G        |
-| fast   | 3.1s/16G |               |
+| per-it | i7-12700 (512x512) | i7-12700 (256x256) | Snapdragon865 (512x512) |
+| ------ | ------------------ | ------------------ | ----------------------- |
+| slow   | 5.3s/10G           | 1.5s/7G            | 20s/7G                  |
+| fast   | 3.1s/16G           | 1s/13G             |                         |
 
 ## News
+2023-01-05: add 256x256 model to x86 project
+
 2023-01-04: merge and finish the mha op in x86, enable fast gelu
 
 ## Demo
@@ -31,11 +33,13 @@ All models and exe file you can download from [百度网盘](https://pan.baidu.c
 1. enter folder [exe](./x86/exe)
 2. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
 3. set up your config in ```magic.txt```, each line are:
-    1. step number (15 is noe bad)
-    2. seed number (set 0 to be random)
-    3. positive prompt
-    4. negative prompt
-4. run ```fast_but_high_ram.exe``` or ```slow_but_low_ram.exe```, the fast one is fast but with about 16G ram, the slow one is slow but only with 10G ram
+    1. resolution (only support 256 and 512)
+    2. speed mode (0 for slow but low ram, 1 for fast but high ram)
+    3. step number (15 is noe bad)
+    4. seed number (set 0 to be random)
+    5. positive prompt
+    6. negative prompt
+4. run ```stable-diffusion.exe```
 
 ### android apk
 1. download an install the apk from the link
@@ -54,7 +58,7 @@ Note: Please comply with the requirements of the SD model and do not use it for 
 2. Model details：
     1. Weights：Naifu (u know where to find)
     2. Sampler：Euler ancestral (k-diffusion version)
-    3. Resolution：512*512
+    3. Resolution：512x512 or 256x256
     4. Denoiser：CFGDenoiser, CompVisDenoiser
     4. Prompt：positive & negative, both supported :)
 

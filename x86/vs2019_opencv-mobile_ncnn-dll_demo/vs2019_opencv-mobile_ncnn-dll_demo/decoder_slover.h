@@ -16,7 +16,7 @@ using namespace std;
 class DecodeSlover
 {
 public:
-    DecodeSlover();
+    DecodeSlover(int s);
 
     ncnn::Mat decode(ncnn::Mat sample);
 

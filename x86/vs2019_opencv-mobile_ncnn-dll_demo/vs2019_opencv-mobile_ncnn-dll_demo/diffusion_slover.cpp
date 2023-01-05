@@ -1,15 +1,34 @@
 #include "diffusion_slover.h"
 
-DiffusionSlover::DiffusionSlover()
+DiffusionSlover::DiffusionSlover(int s, int mode)
 {
 	net.opt.use_vulkan_compute = false;
-	net.opt.use_winograd_convolution = true;
-	net.opt.use_sgemm_convolution = true;
+	net.opt.lightmode = true;
+	if (mode == 0)
+	{
+		net.opt.use_winograd_convolution = false;
+		net.opt.use_sgemm_convolution = false;
+	}
+	else
+	{
+		net.opt.use_winograd_convolution = true;
+		net.opt.use_sgemm_convolution = true;
+	}
 	net.opt.use_fp16_packed = true;
 	net.opt.use_fp16_storage = true;
 	net.opt.use_fp16_arithmetic = true;
 	net.opt.use_packing_layout = true;
-	net.load_param("assets/UNetModel-MHA-fp16.param");
+
+	if (s == 512)
+	{
+		net.load_param("assets/UNetModel-MHA-fp16.param");
+		size = 64;
+	}
+	else
+	{
+		net.load_param("assets/UNetModel-256-MHA-fp16.param");
+		size = 32;
+	}
 	net.load_model("assets/UNetModel-MHA-fp16.bin");
 
 	ifstream in("assets/log_sigmas.bin", ios::in | ios::binary);
@@ -17,12 +36,12 @@ DiffusionSlover::DiffusionSlover()
 	in.close();
 }
 
-ncnn::Mat DiffusionSlover::randn_4_64_64(int seed)
+ncnn::Mat DiffusionSlover::randn_4(int seed)
 {
-	cv::Mat cv_x(cv::Size(64, 64), CV_32FC4);
+	cv::Mat cv_x(cv::Size(size, size), CV_32FC4);
 	cv::RNG rng(seed);
 	rng.fill(cv_x, cv::RNG::NORMAL, 0, 1);
-	ncnn::Mat x_mat(64, 64, 4, (void*)cv_x.data);
+	ncnn::Mat x_mat(size, size, 4, (void*)cv_x.data);
 	return x_mat.clone();
 }
 
@@ -87,7 +106,7 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 	for (int c = 0; c < 4; c++) {
 		float* u_ptr = denoised_uncond.channel(c);
 		float* c_ptr = denoised_cond.channel(c);
-		for (int hw = 0; hw < 64 * 64; hw++) {
+		for (int hw = 0; hw < size * size; hw++) {
 			(*u_ptr) = (*u_ptr) + 7 * ((*c_ptr) - (*u_ptr));
 			u_ptr++;
 			c_ptr++;
@@ -99,7 +118,7 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 
 ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& uc)
 {
-	ncnn::Mat x_mat = randn_4_64_64(seed % 1000);
+	ncnn::Mat x_mat = randn_4(seed % 1000);
 
 	// t_to_sigma
 	vector<float> sigma(step);
@@ -130,12 +149,12 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 			float sigma_down = sqrt(sigma[i + 1] * sigma[i + 1] - sigma_up * sigma_up);
 
 			srand(time(NULL));
-			ncnn::Mat randn = randn_4_64_64(rand() % 1000);
+			ncnn::Mat randn = randn_4(rand() % 1000);
 			for (int c = 0; c < 4; c++) {
 				float* x_ptr = x_mat.channel(c);
 				float* d_ptr = denoised.channel(c);
 				float* r_ptr = randn.channel(c);
-				for (int hw = 0; hw < 64 * 64; hw++) {
+				for (int hw = 0; hw < size * size; hw++) {
 					*x_ptr = *x_ptr + ((*x_ptr - *d_ptr) / sigma[i]) * (sigma_down - sigma[i]) + *r_ptr * sigma_up;
 					x_ptr++;
 					d_ptr++;
