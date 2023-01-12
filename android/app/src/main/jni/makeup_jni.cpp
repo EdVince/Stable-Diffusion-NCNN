@@ -28,9 +28,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#include "parsing.h"
-#include "transfer.h"
-#include "blazeface.h"
 #include "prompt_slover.h"
 #include "diffusion_slover.h"
 #include "decoder_slover.h"
@@ -55,9 +52,6 @@ std::string JavaStringToString(JNIEnv* env, jstring str) {
     return u8_string;
 }
 
-static Transfer makeup_transfer;
-static Parsing face_parsing;
-static BlazeFace face_detect;
 static PromptSlover prompt_slover;
 static DiffusionSlover diffusion_slover;
 static DecodeSlover decode_slover;
@@ -67,16 +61,12 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
     __android_log_print(ANDROID_LOG_DEBUG, "makeup", "JNI_OnLoad");
 
-    ncnn::create_gpu_instance();
-
     return JNI_VERSION_1_4;
 }
 
 JNIEXPORT void JNI_OnUnload(JavaVM* vm, void* reserved)
 {
     __android_log_print(ANDROID_LOG_DEBUG, "makeup", "JNI_OnUnload");
-
-    ncnn::destroy_gpu_instance();
 }
 
 // public native boolean Init(AssetManager mgr);
@@ -106,11 +96,6 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_Makeup_Process(JNIEnv* env, j
     if (info.format != ANDROID_BITMAP_FORMAT_RGBA_8888)
         return JNI_FALSE;
 
-
-//    int step = 15;
-//    int seed = 42;
-//    std::string positive_prompt = "floating hair, portrait, ((loli)), ((one girl)), cute face, hidden hands, asymmetrical bangs, beautiful detailed eyes, eye shadow, hair ornament, ribbons, bowties, buttons, pleated skirt, (((masterpiece))), ((best quality)), colorful";
-//    std::string negative_prompt = "((part of the head)), ((((mutated hands and fingers)))), deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, Octane renderer, lowres, bad anatomy, bad hands, text";
     int step = jstep;
     int seed = jseed;
     std::string positive_prompt = "" + JavaStringToString(env,jpositivePromptText);
@@ -130,32 +115,10 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_Makeup_Process(JNIEnv* env, j
 
     x_samples_ddim.to_android_bitmap(env,show_bitmap,ncnn::Mat::PIXEL_RGB);
 
-    cv::Mat image(512, 512, CV_8UC3);
-    x_samples_ddim.to_pixels(image.data, ncnn::Mat::PIXEL_RGB);
-//
-//
-//    cv::Mat image = cv::Mat::zeros(512,512,CV_8UC3);
-//    for(int i = 0; i < 512; i++)
-//    {
-//        for(int j = 0; j < 512; j++)
-//        {
-//            image.at<cv::Vec3b>(i,j)[0] = (uchar)(255.0*i/512.0);
-//        }
-//    }
-//    for(int i = 0; i < 512; i++)
-//    {
-//        for(int j = 0; j < 512; j++)
-//        {
-//            image.at<cv::Vec3b>(i,j)[1] = (uchar)(255.0*j/512.0);
-//        }
-//    }
-//
-//    cv::Mat makeup_result = image;
-//    ncnn::Mat blengImg_ncnn = ncnn::Mat::from_pixels(makeup_result.data,ncnn::Mat::PIXEL_RGB,makeup_result.cols,makeup_result.rows);
-//
-//    // ncnn to bitmap
-//    blengImg_ncnn.to_android_bitmap(env, show_bitmap, ncnn::Mat::PIXEL_RGB);
+    __android_log_print(ANDROID_LOG_ERROR, "SD", "ok");
 
+    cv::Mat image(256, 256, CV_8UC3);
+    x_samples_ddim.to_pixels(image.data, ncnn::Mat::PIXEL_RGB);
 
     return JNI_TRUE;
 }

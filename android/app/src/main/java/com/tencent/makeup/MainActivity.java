@@ -68,7 +68,7 @@ public class MainActivity extends Activity
         stepText = (EditText) findViewById(R.id.step);
         seedText = (EditText) findViewById(R.id.seed);
 
-        final Bitmap showBitmap = Bitmap.createBitmap(512,512,Bitmap.Config.ARGB_8888);
+        final Bitmap showBitmap = Bitmap.createBitmap(256,256,Bitmap.Config.ARGB_8888);
 
         Button buttonDetect = (Button) findViewById(R.id.go);
         buttonDetect.setOnClickListener(new View.OnClickListener() {

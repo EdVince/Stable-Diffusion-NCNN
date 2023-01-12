@@ -23,7 +23,7 @@ public:
     ncnn::Mat sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& uc);
 
 private:
-    ncnn::Mat randn_4_64_64(int seed);
+    ncnn::Mat randn_4_32_32(int seed);
     ncnn::Mat CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float sigma, ncnn::Mat cond, ncnn::Mat uncond);
 
 private:

@@ -1,0 +1,18 @@
+# ninja log v5
+1	924	1673513323	CMakeFiles/makeup.dir/decoder_slover.cpp.o	a26968dff47d86f8
+0	1079	1673513323	CMakeFiles/makeup.dir/makeup_jni.cpp.o	b21c6ab5990d302a
+0	1086	1673513323	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	7c27efd0b5023c99
+1	1948	1673513324	CMakeFiles/makeup.dir/prompt_slover.cpp.o	d4b7d2e3f3a5f8f4
+1948	2175	1673513324	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libmakeup.so	cfd001a1577a2bc7
+1	851	1673514401	CMakeFiles/makeup.dir/decoder_slover.cpp.o	a26968dff47d86f8
+1	974	1673514402	CMakeFiles/makeup.dir/makeup_jni.cpp.o	b21c6ab5990d302a
+974	1204	1673514402	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libmakeup.so	cfd001a1577a2bc7
+1	945	1673514579	CMakeFiles/makeup.dir/makeup_jni.cpp.o	b21c6ab5990d302a
+945	1190	1673514579	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libmakeup.so	cfd001a1577a2bc7
+1	961	1673515207	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	7c27efd0b5023c99
+961	1209	1673515208	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libmakeup.so	cfd001a1577a2bc7
+2	998	1673515634	CMakeFiles/makeup.dir/decoder_slover.cpp.o	a26968dff47d86f8
+2	1126	1673515634	CMakeFiles/makeup.dir/makeup_jni.cpp.o	b21c6ab5990d302a
+1	1153	1673515634	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	7c27efd0b5023c99
+1153	1384	1673515635	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libmakeup.so	cfd001a1577a2bc7
+1	21	0	clean	325df7ab9107eb8e

@@ -1,0 +1,24 @@
+# ninja log v5
+1	939	1673513325	CMakeFiles/makeup.dir/decoder_slover.cpp.o	96425531b2f0f5c2
+0	1057	1673513325	CMakeFiles/makeup.dir/makeup_jni.cpp.o	2e87eea7f93e3f62
+0	1080	1673513325	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	83a6d0ad4ed82f49
+1	1842	1673513326	CMakeFiles/makeup.dir/prompt_slover.cpp.o	7053afee4341945a
+1842	2092	1673513326	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so	96894f6de7130564
+4	1425	1673514400	CMakeFiles/makeup.dir/decoder_slover.cpp.o	96425531b2f0f5c2
+2	1504	1673514400	CMakeFiles/makeup.dir/makeup_jni.cpp.o	2e87eea7f93e3f62
+1504	1806	1673514400	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so	96894f6de7130564
+2	1420	1673514578	CMakeFiles/makeup.dir/makeup_jni.cpp.o	2e87eea7f93e3f62
+1420	1746	1673514578	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so	96894f6de7130564
+1	92	1673514940	build.ninja	94457390f026bf80
+2	1270	1673514941	CMakeFiles/makeup.dir/decoder_slover.cpp.o	96425531b2f0f5c2
+2	1351	1673514941	CMakeFiles/makeup.dir/makeup_jni.cpp.o	2e87eea7f93e3f62
+1	1379	1673514941	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	83a6d0ad4ed82f49
+2	2142	1673514942	CMakeFiles/makeup.dir/prompt_slover.cpp.o	7053afee4341945a
+2142	2487	1673514942	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so	335e64ef0455551e
+1	1376	1673515206	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	83a6d0ad4ed82f49
+1376	1782	1673515206	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so	335e64ef0455551e
+3	1344	1673515633	CMakeFiles/makeup.dir/decoder_slover.cpp.o	96425531b2f0f5c2
+2	1419	1673515633	CMakeFiles/makeup.dir/makeup_jni.cpp.o	2e87eea7f93e3f62
+1	1454	1673515633	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	83a6d0ad4ed82f49
+1454	1806	1673515633	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so	335e64ef0455551e
+0	11	0	clean	325df7ab9107eb8e

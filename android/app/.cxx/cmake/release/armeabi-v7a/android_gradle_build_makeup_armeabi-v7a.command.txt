@@ -1,0 +1,7 @@
+Executable : /Users/jinxuan/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
+arguments : 
+-C
+/Users/jinxuan/data/develop/android/app/.cxx/cmake/release/armeabi-v7a
+makeup
+jvmArgs : 
+

@@ -15,8 +15,8 @@ int DiffusionSlover::load(AAssetManager* mgr, std::string bin)
 	net.opt.use_packing_layout = true;
 	net.opt.num_threads = ncnn::get_big_cpu_count();
 
-	net.load_param(mgr,"UNetModel-fp16.param");
-	net.load_model(mgr,"UNetModel-fp16.bin");
+	net.load_param(mgr,"UNetModel-256-MHA-fp16-opt.param");
+	net.load_model(mgr,"UNetModel-MHA-fp16.bin");
 
 	ifstream in(bin, ios::in | ios::binary);
 	in.read((char*)&log_sigmas, sizeof log_sigmas);
@@ -25,12 +25,12 @@ int DiffusionSlover::load(AAssetManager* mgr, std::string bin)
 	return 0;
 }
 
-ncnn::Mat DiffusionSlover::randn_4_64_64(int seed)
+ncnn::Mat DiffusionSlover::randn_4_32_32(int seed)
 {
-	cv::Mat cv_x(cv::Size(64, 64), CV_32FC4);
+	cv::Mat cv_x(cv::Size(32, 32), CV_32FC4);
 	cv::RNG rng(seed);
 	rng.fill(cv_x, cv::RNG::NORMAL, 0, 1);
-	ncnn::Mat x_mat(64, 64, 4, (void*)cv_x.data);
+	ncnn::Mat x_mat(32, 32, 4, (void*)cv_x.data);
 	return x_mat.clone();
 }
 
@@ -95,7 +95,7 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 	for (int c = 0; c < 4; c++) {
 		float* u_ptr = denoised_uncond.channel(c);
 		float* c_ptr = denoised_cond.channel(c);
-		for (int hw = 0; hw < 64 * 64; hw++) {
+		for (int hw = 0; hw < 32 * 32; hw++) {
 			(*u_ptr) = (*u_ptr) + 7 * ((*c_ptr) - (*u_ptr));
 			u_ptr++;
 			c_ptr++;
@@ -107,7 +107,7 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 
 ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& uc)
 {
-	ncnn::Mat x_mat = randn_4_64_64(seed % 1000);
+	ncnn::Mat x_mat = randn_4_32_32(seed % 1000);
 
 	// t_to_sigma
 	vector<float> sigma(step);
@@ -140,12 +140,12 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 			float sigma_down = sqrt(sigma[i + 1] * sigma[i + 1] - sigma_up * sigma_up);
 
 			srand(time(NULL));
-			ncnn::Mat randn = randn_4_64_64(rand() % 1000);
+			ncnn::Mat randn = randn_4_32_32(rand() % 1000);
 			for (int c = 0; c < 4; c++) {
 				float* x_ptr = x_mat.channel(c);
 				float* d_ptr = denoised.channel(c);
 				float* r_ptr = randn.channel(c);
-				for (int hw = 0; hw < 64 * 64; hw++) {
+				for (int hw = 0; hw < 32 * 32; hw++) {
 					*x_ptr = *x_ptr + ((*x_ptr - *d_ptr) / sigma[i]) * (sigma_down - sigma[i]) + *r_ptr * sigma_up;
 					x_ptr++;
 					d_ptr++;
