@@ -1,6 +1,0 @@
-ninja: Entering directory `/Users/jinxuan/data/develop/android/app/.cxx/cmake/release/armeabi-v7a'
-[1/5] Building CXX object CMakeFiles/makeup.dir/decoder_slover.cpp.o
-[2/5] Building CXX object CMakeFiles/makeup.dir/makeup_jni.cpp.o
-[3/5] Building CXX object CMakeFiles/makeup.dir/diffusion_slover.cpp.o
-[4/5] Building CXX object CMakeFiles/makeup.dir/prompt_slover.cpp.o
-[5/5] Linking CXX shared library /Users/jinxuan/data/develop/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libmakeup.so

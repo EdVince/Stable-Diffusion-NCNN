@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="decoder_slover.h" />
     <ClInclude Include="diffusion_slover.h" />
+    <ClInclude Include="getmem.h" />
     <ClInclude Include="prompt_slover.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

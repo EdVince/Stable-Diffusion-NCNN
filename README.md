@@ -9,14 +9,12 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 ***Performance (time pre-it and ram)***
 | per-it | i7-12700 (512x512) | i7-12700 (256x256) | Snapdragon865 (256x256) |
 | ------ | ------------------ | ------------------ | ----------------------- |
-| slow   | 6.0s/5.7G          | 1.5s/3.9G          | 1.6s/2.6G               |
-| fast   | 3.5s/11.5G         | 0.8s/6.6G          |                         |
+| slow   | 6.0s/6.99G         | 1.5s/3.95G         | 1.6s/2.6G               |
+| fast   | 3.5s/12.21G        | 0.8s/6.37G         |                         |
 
 ## News
 
-2023-01-12: update android
-
-2023-01-12: update to the latest ncnn code and use optimize model 
+2023-01-12: update to the latest ncnn code and use optimize model & update android & add memory monitor
 
 2023-01-05: add 256x256 model to x86 project
 

@@ -1,7 +1,0 @@
-# ninja log v5
-1	882	1673516175	CMakeFiles/makeup.dir/decoder_slover.cpp.o	4cce341c0481773f
-0	1123	1673516175	CMakeFiles/makeup.dir/makeup_jni.cpp.o	e47faf3ea5b33901
-0	1175	1673516175	CMakeFiles/makeup.dir/diffusion_slover.cpp.o	5510a05bf9760a1
-1	3455	1673516177	CMakeFiles/makeup.dir/prompt_slover.cpp.o	f46999729d1b6755
-3455	3729	1673516178	/Users/jinxuan/data/develop/android/app/build/intermediates/cmake/release/obj/arm64-v8a/libmakeup.so	c330f26a8fc92585
-0	11	0	clean	325df7ab9107eb8e

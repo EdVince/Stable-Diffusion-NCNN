@@ -13,6 +13,7 @@
 #include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <time.h>
+#include "getmem.h"
 using namespace std;
 
 int main()
@@ -66,20 +67,25 @@ int main()
 	magic.close();
 
 	// stable diffusion
-	cout << "----------------[init]--------------------" << endl;
+	cout << "----------------[init]--------------------";
 	PromptSlover prompt_slover;
 	DiffusionSlover diffusion_slover(size, mode);
 	DecodeSlover decode_slover(size);
+	printf(" %.2lfG / %.2lfG\n", getCurrentRSS() / 1024.0 / 1024.0 / 1024.0, getPeakRSS() / 1024.0 / 1024.0 / 1024.0);
 
-	cout << "----------------[prompt]------------------" << endl;
+	cout << "----------------[prompt]------------------";
 	ncnn::Mat cond = prompt_slover.get_conditioning(positive_prompt);
 	ncnn::Mat uncond = prompt_slover.get_conditioning(negative_prompt);
+	printf(" %.2lfG / %.2lfG\n", getCurrentRSS() / 1024.0 / 1024.0 / 1024.0, getPeakRSS() / 1024.0 / 1024.0 / 1024.0);
 
 	cout << "----------------[diffusion]---------------" << endl;
 	ncnn::Mat sample = diffusion_slover.sampler(seed, step, cond, uncond);
+	cout << "----------------[diffusion]---------------";
+	printf(" %.2lfG / %.2lfG\n", getCurrentRSS() / 1024.0 / 1024.0 / 1024.0, getPeakRSS() / 1024.0 / 1024.0 / 1024.0);
 
-	cout << "----------------[decode]------------------" << endl;
+	cout << "----------------[decode]------------------";
 	ncnn::Mat x_samples_ddim = decode_slover.decode(sample);
+	printf(" %.2lfG / %.2lfG\n", getCurrentRSS() / 1024.0 / 1024.0 / 1024.0, getPeakRSS() / 1024.0 / 1024.0 / 1024.0);
 
 	cout << "----------------[save]--------------------" << endl;
 	cv::Mat image(size, size, CV_8UC3);
