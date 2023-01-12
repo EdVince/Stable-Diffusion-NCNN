@@ -12,9 +12,9 @@ DecodeSlover::DecodeSlover(int s)
 	net.opt.use_packing_layout = true;
 
 	if (s == 512)
-		net.load_param("assets/AutoencoderKL-fp16.param");
+		net.load_param("assets/AutoencoderKL-512-fp16-opt.param");
 	else
-		net.load_param("assets/AutoencoderKL-256-fp16.param");
+		net.load_param("assets/AutoencoderKL-256-fp16-opt.param");
 	net.load_model("assets/AutoencoderKL-fp16.bin");
 }
 

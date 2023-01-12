@@ -1,3 +1,0 @@
-ninja: Entering directory `/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/.cxx/cmake/debug/arm64-v8a'
-[1/2] Building CXX object CMakeFiles/makeup.dir/diffusion_slover.cpp.o
-[2/2] Linking CXX shared library /Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libmakeup.so

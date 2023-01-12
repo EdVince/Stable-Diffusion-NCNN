@@ -1,7 +1,0 @@
-Executable : /Users/jinxuan/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
-arguments : 
--C
-/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/.cxx/cmake/debug/armeabi-v7a
-makeup
-jvmArgs : 
-

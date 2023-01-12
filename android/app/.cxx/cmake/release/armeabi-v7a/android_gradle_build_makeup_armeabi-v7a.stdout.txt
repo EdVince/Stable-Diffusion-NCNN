@@ -1,2 +1,0 @@
-ninja: Entering directory `/Users/jinxuan/data/develop/Stable-Diffusion-NCNN-main/android/app/.cxx/cmake/release/armeabi-v7a'
-ninja: no work to do.

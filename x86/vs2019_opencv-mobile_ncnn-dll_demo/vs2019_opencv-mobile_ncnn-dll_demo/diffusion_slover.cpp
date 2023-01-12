@@ -21,12 +21,12 @@ DiffusionSlover::DiffusionSlover(int s, int mode)
 
 	if (s == 512)
 	{
-		net.load_param("assets/UNetModel-MHA-fp16.param");
+		net.load_param("assets/UNetModel-512-MHA-fp16-opt.param");
 		size = 64;
 	}
 	else
 	{
-		net.load_param("assets/UNetModel-256-MHA-fp16.param");
+		net.load_param("assets/UNetModel-256-MHA-fp16-opt.param");
 		size = 32;
 	}
 	net.load_model("assets/UNetModel-MHA-fp16.bin");

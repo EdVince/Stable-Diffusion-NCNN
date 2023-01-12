@@ -9,10 +9,13 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 ***Performance (time pre-it and ram)***
 | per-it | i7-12700 (512x512) | i7-12700 (256x256) | Snapdragon865 (512x512) |
 | ------ | ------------------ | ------------------ | ----------------------- |
-| slow   | 5.3s/10G           | 1.5s/7G            | 20s/7G                  |
-| fast   | 3.1s/16G           | 1s/13G             |                         |
+| slow   | 6.0s/5.7G          | 1.5s/3.9G          | 20s/7G                  |
+| fast   | 3.5s/11.5G         | 0.8s/6.6G          |                         |
 
 ## News
+
+2023-01-12: update to the latest ncnn code and use optimize model 
+
 2023-01-05: add 256x256 model to x86 project
 
 2023-01-04: merge and finish the mha op in x86, enable fast gelu
@@ -69,7 +72,7 @@ Note: Please comply with the requirements of the SD model and do not use it for 
 2. open the vs2019 project and compile the release&x64
 
 ### Compile for android
-1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-fp16``` and put them to ```assets``` folder
+1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-fp16.bin``` and put them to ```assets``` folder
 2. open android studio and run the project
 
 ### ONNX Model
