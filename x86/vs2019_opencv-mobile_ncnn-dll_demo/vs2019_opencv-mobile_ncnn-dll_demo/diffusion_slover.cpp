@@ -135,7 +135,7 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 	float _norm_[4] = { sigma[0], sigma[0], sigma[0], sigma[0] };
 	x_mat.substract_mean_normalize(0, _norm_);
 
-	// sample_euler_ancestral
+	// euler ancestral
 	{
 		for (int i = 0; i < sigma.size() - 1; i++) {
 			cout << "step:" << i << "\t\t";
@@ -163,6 +163,56 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 			}
 		}
 	}
+
+	/*
+	// DPM++ 2M Karras
+	ncnn::Mat old_denoised;
+	{
+		for (int i = 0; i < sigma.size() - 1; i++) {
+			cout << "step:" << i << "\t\t";
+
+			double t1 = ncnn::get_current_time();
+			ncnn::Mat denoised = CFGDenoiser_CompVisDenoiser(x_mat, sigma[i], c, uc);
+			double t2 = ncnn::get_current_time();
+			cout << t2 - t1 << "ms" << endl;
+
+			float sigma_curt = sigma[i];
+			float sigma_next = sigma[i + 1];
+			float tt = -1.0 * log(sigma_curt);
+			float tt_next = -1.0 * log(sigma_next);
+			float hh = tt_next - tt;
+			if (old_denoised.empty() || sigma_next == 0)
+			{
+				for (int c = 0; c < 4; c++) {
+					float* x_ptr = x_mat.channel(c);
+					float* d_ptr = denoised.channel(c);
+					for (int hw = 0; hw < size * size; hw++) {
+						*x_ptr = (sigma_next / sigma_curt) * *x_ptr - (exp(-hh) - 1) * *d_ptr;
+						x_ptr++;
+						d_ptr++;
+					}
+				}
+			}
+			else
+			{
+				float hh_last = -1.0 * log(sigma[i - 1]);
+				float r = hh_last / hh;
+				for (int c = 0; c < 4; c++) {
+					float* x_ptr = x_mat.channel(c);
+					float* d_ptr = denoised.channel(c);
+					float* od_ptr = old_denoised.channel(c);
+					for (int hw = 0; hw < size * size; hw++) {
+						*x_ptr = (sigma_next / sigma_curt) * *x_ptr - (exp(-hh) - 1) * ((1 + 1 / (2 * r)) * *d_ptr - (1 / (2 * r)) * *od_ptr);
+						x_ptr++;
+						d_ptr++;
+						od_ptr++;
+					}
+				}
+			}
+			old_denoised.clone_from(denoised);
+		}
+	}
+	*/
 
 	ncnn::Mat fuck_x;
 	fuck_x.clone_from(x_mat);
