@@ -79,6 +79,30 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 	ncnn::Mat c_out_mat(1);
 	c_out_mat[0] = c_out;
 
+	ncnn::Mat v44;
+	ncnn::Mat v83;
+	ncnn::Mat v116;
+	ncnn::Mat v163;
+	ncnn::Mat v251;
+	ncnn::Mat v337;
+	ncnn::Mat v425;
+	ncnn::Mat v511;
+	ncnn::Mat v599;
+	ncnn::Mat v627;
+	ncnn::Mat v711;
+	ncnn::Mat v725;
+	ncnn::Mat v740;
+	ncnn::Mat v755;
+	ncnn::Mat v772;
+	ncnn::Mat v858;
+	ncnn::Mat v944;
+	ncnn::Mat v1032;
+	ncnn::Mat v1118;
+	ncnn::Mat v1204;
+	ncnn::Mat v1292;
+	ncnn::Mat v1378;
+	ncnn::Mat v1464;
+
 	ncnn::Mat denoised_cond;
 	{
 		ncnn::Extractor ex = net.create_extractor();
@@ -88,6 +112,29 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 		ex.input("in2", cond);
 		ex.input("c_in", c_in_mat);
 		ex.input("c_out", c_out_mat);
+		ex.extract("44", v44, 1);
+		ex.extract("83", v83, 1);
+		ex.extract("116", v116, 1);
+		ex.extract("163", v163, 1);
+		ex.extract("251", v251, 1);
+		ex.extract("337", v337, 1);
+		ex.extract("425", v425, 1);
+		ex.extract("511", v511, 1);
+		ex.extract("599", v599, 1);
+		ex.extract("627", v627, 1);
+		ex.extract("711", v711, 1);
+		ex.extract("725", v725, 1);
+		ex.extract("740", v740, 1);
+		ex.extract("755", v755, 1);
+		ex.extract("772", v772, 1);
+		ex.extract("858", v858, 1);
+		ex.extract("944", v944, 1);
+		ex.extract("1032", v1032, 1);
+		ex.extract("1118", v1118, 1);
+		ex.extract("1204", v1204, 1);
+		ex.extract("1292", v1292, 1);
+		ex.extract("1378", v1378, 1);
+		ex.extract("1464", v1464, 1);
 		ex.extract("outout", denoised_cond);
 	}
 
@@ -100,6 +147,29 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 		ex.input("in2", uncond);
 		ex.input("c_in", c_in_mat);
 		ex.input("c_out", c_out_mat);
+		ex.input("44", v44);
+		ex.input("83", v83);
+		ex.input("116", v116);
+		ex.input("163", v163);
+		ex.input("251", v251);
+		ex.input("337", v337);
+		ex.input("425", v425);
+		ex.input("511", v511);
+		ex.input("599", v599);
+		ex.input("627", v627);
+		ex.input("711", v711);
+		ex.input("725", v725);
+		ex.input("740", v740);
+		ex.input("755", v755);
+		ex.input("772", v772);
+		ex.input("858", v858);
+		ex.input("944", v944);
+		ex.input("1032", v1032);
+		ex.input("1118", v1118);
+		ex.input("1204", v1204);
+		ex.input("1292", v1292);
+		ex.input("1378", v1378);
+		ex.input("1464", v1464);
 		ex.extract("outout", denoised_uncond);
 	}
 
