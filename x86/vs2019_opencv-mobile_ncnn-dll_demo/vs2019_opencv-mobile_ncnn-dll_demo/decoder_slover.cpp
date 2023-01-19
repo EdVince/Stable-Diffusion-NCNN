@@ -1,6 +1,6 @@
 #include "decoder_slover.h"
 
-DecodeSlover::DecodeSlover(int s)
+DecodeSlover::DecodeSlover(int h, int w)
 {
 	net.opt.use_vulkan_compute = false;
 	net.opt.use_winograd_convolution = false;
@@ -11,11 +11,39 @@ DecodeSlover::DecodeSlover(int s)
 	net.opt.use_bf16_storage = true;
 	net.opt.use_packing_layout = true;
 
-	if (s == 512)
-		net.load_param("assets/AutoencoderKL-512-fp16-opt.param");
+	if (h == 512 && w == 512)
+		net.load_param("assets/AutoencoderKL-512-512-fp16-opt.param");
+	else if (h == 256 && w == 256)
+		net.load_param("assets/AutoencoderKL-256-256-fp16-opt.param");
 	else
-		net.load_param("assets/AutoencoderKL-256-fp16-opt.param");
+	{
+		generate_param(h, w);
+		net.load_param(("assets/tmp-AutoencoderKL-" + to_string(h) + "-" + to_string(w) + "-fp16.param").c_str());
+	}
 	net.load_model("assets/AutoencoderKL-fp16.bin");
+}
+
+void DecodeSlover::generate_param(int height, int width)
+{
+	string line;
+	ifstream decoder_file("assets/AutoencoderKL-base-fp16.param");
+	ofstream decoder_file_new("assets/tmp-AutoencoderKL-" + std::to_string(height) + "-" + std::to_string(width) + "-fp16.param");
+
+	int cnt = 0;
+	while (getline(decoder_file, line))
+	{
+		if (line.substr(0, 7) == "Reshape")
+		{
+			if (cnt < 3)
+				line = line.substr(0, line.size() - 12) + "0=" + to_string(width * height / 8 / 8) + " 1=512";
+			else
+				line = line.substr(0, line.size() - 15) + "0=" + to_string(width / 8) + " 1=" + std::to_string(height / 8) + " 2=512";
+			cnt++;
+		}
+		decoder_file_new << line << endl;
+	}
+	decoder_file_new.close();
+	decoder_file.close();
 }
 
 ncnn::Mat DecodeSlover::decode(ncnn::Mat sample)

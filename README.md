@@ -14,7 +14,7 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 
 ## News
 
-2023-01-19: speed up & less ram in x86
+2023-01-19: speed up & less ram in x86, dynamic shape in x86
 
 2023-01-12: update to the latest ncnn code and use optimize model, update android, add memory monitor
 
@@ -63,7 +63,7 @@ Note: Please comply with the requirements of the SD model and do not use it for 
 2. Model details：
     1. Weights：Naifu (u know where to find)
     2. Sampler：Euler ancestral (k-diffusion version)
-    3. Resolution：512x512 or 256x256
+    3. Resolution：dynamic shape, but must be a multiple of 128, minimum is 256
     4. Denoiser：CFGDenoiser, CompVisDenoiser
     4. Prompt：positive & negative, both supported :)
 

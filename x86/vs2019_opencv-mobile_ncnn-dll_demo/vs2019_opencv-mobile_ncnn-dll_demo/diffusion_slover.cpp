@@ -1,6 +1,6 @@
 #include "diffusion_slover.h"
 
-DiffusionSlover::DiffusionSlover(int s, int mode)
+DiffusionSlover::DiffusionSlover(int h, int w, int mode)
 {
 	net.opt.use_vulkan_compute = false;
 	net.opt.lightmode = true;
@@ -19,29 +19,87 @@ DiffusionSlover::DiffusionSlover(int s, int mode)
 	net.opt.use_fp16_arithmetic = true;
 	net.opt.use_packing_layout = true;
 
-	if (s == 512)
-	{
-		net.load_param("assets/UNetModel-512-MHA-fp16-opt.param");
-		size = 64;
-	}
+	if (h == 512 && w == 512)
+		net.load_param("assets/UNetModel-512-512-MHA-fp16-opt.param");
+	else if (h == 256 && w == 256)
+		net.load_param("assets/UNetModel-256-256-MHA-fp16-opt.param");
 	else
 	{
-		net.load_param("assets/UNetModel-256-MHA-fp16-opt.param");
-		size = 32;
+		generate_param(h, w);
+		net.load_param(("assets/tmp-UNetModel-" + std::to_string(h) + "-" + std::to_string(w) + "-MHA-fp16.param").c_str());
 	}
 	net.load_model("assets/UNetModel-MHA-fp16.bin");
+
+	h_size = h / 8;
+	w_size = w / 8;
 
 	ifstream in("assets/log_sigmas.bin", ios::in | ios::binary);
 	in.read((char*)&log_sigmas, sizeof log_sigmas);
 	in.close();
 }
 
+void DiffusionSlover::generate_param(int height, int width)
+{
+	string line;
+	ifstream diffuser_file("assets/UNetModel-base-MHA-fp16.param");
+	ofstream diffuser_file_new("assets/tmp-UNetModel-" + std::to_string(height) + "-" + std::to_string(width) + "-MHA-fp16.param");
+
+	int cnt = 0;
+	while (getline(diffuser_file, line))
+	{
+		if (line.substr(0, 7) == "Reshape")
+		{
+			switch (cnt)
+			{
+			case 0: line = line.substr(0, line.size() - 4) + to_string(width * height / 8 / 8); break;
+			case 1: line = line.substr(0, line.size() - 7) + to_string(width / 8) + " 2=" + std::to_string(height / 8); break;
+			case 2: line = line.substr(0, line.size() - 4) + to_string(width * height / 8 / 8); break;
+			case 3: line = line.substr(0, line.size() - 7) + to_string(width / 8) + " 2=" + std::to_string(height / 8); break;
+			case 4: line = line.substr(0, line.size() - 4) + to_string(width * height / 2 / 2 / 8 / 8); break;
+			case 5: line = line.substr(0, line.size() - 7) + to_string(width / 2 / 8) + " 2=" + std::to_string(height / 2 / 8); break;
+			case 6: line = line.substr(0, line.size() - 4) + to_string(width * height / 2 / 2 / 8 / 8); break;
+			case 7: line = line.substr(0, line.size() - 7) + to_string(width / 2 / 8) + " 2=" + std::to_string(height / 2 / 8); break;
+			case 8: line = line.substr(0, line.size() - 3) + to_string(width * height / 4 / 4 / 8 / 8); break;
+			case 9: line = line.substr(0, line.size() - 7) + to_string(width / 4 / 8) + " 2=" + std::to_string(height / 4 / 8); break;
+			case 10: line = line.substr(0, line.size() - 3) + to_string(width * height / 4 / 4 / 8 / 8); break;
+			case 11: line = line.substr(0, line.size() - 7) + to_string(width / 4 / 8) + " 2=" + std::to_string(height / 4 / 8); break;
+			case 12: line = line.substr(0, line.size() - 2) + to_string(width * height / 8 / 8 / 8 / 8); break;
+			case 13: line = line.substr(0, line.size() - 5) + to_string(width / 8 / 8) + " 2=" + std::to_string(height / 8 / 8); break;
+			case 14: line = line.substr(0, line.size() - 3) + to_string(width * height / 4 / 4 / 8 / 8); break;
+			case 15: line = line.substr(0, line.size() - 7) + to_string(width / 4 / 8) + " 2=" + std::to_string(height / 4 / 8); break;
+			case 16: line = line.substr(0, line.size() - 3) + to_string(width * height / 4 / 4 / 8 / 8); break;
+			case 17: line = line.substr(0, line.size() - 7) + to_string(width / 4 / 8) + " 2=" + std::to_string(height / 4 / 8); break;
+			case 18: line = line.substr(0, line.size() - 3) + to_string(width * height / 4 / 4 / 8 / 8); break;
+			case 19: line = line.substr(0, line.size() - 7) + to_string(width / 4 / 8) + " 2=" + std::to_string(height / 4 / 8); break;
+			case 20: line = line.substr(0, line.size() - 4) + to_string(width * height / 2 / 2 / 8 / 8); break;
+			case 21: line = line.substr(0, line.size() - 7) + to_string(width / 2 / 8) + " 2=" + std::to_string(height / 2 / 8); break;
+			case 22: line = line.substr(0, line.size() - 4) + to_string(width * height / 2 / 2 / 8 / 8); break;
+			case 23: line = line.substr(0, line.size() - 7) + to_string(width / 2 / 8) + " 2=" + std::to_string(height / 2 / 8); break;
+			case 24: line = line.substr(0, line.size() - 4) + to_string(width * height / 2 / 2 / 8 / 8); break;
+			case 25: line = line.substr(0, line.size() - 7) + to_string(width / 2 / 8) + " 2=" + std::to_string(height / 2 / 8); break;
+			case 26: line = line.substr(0, line.size() - 4) + to_string(width * height / 8 / 8); break;
+			case 27: line = line.substr(0, line.size() - 7) + to_string(width / 8) + " 2=" + std::to_string(height / 8); break;
+			case 28: line = line.substr(0, line.size() - 4) + to_string(width * height / 8 / 8); break;
+			case 29: line = line.substr(0, line.size() - 7) + to_string(width / 8) + " 2=" + std::to_string(height / 8); break;
+			case 30: line = line.substr(0, line.size() - 4) + to_string(width * height / 8 / 8); break;
+			case 31: line = line.substr(0, line.size() - 7) + to_string(width / 8) + " 2=" + std::to_string(height / 8); break;
+			default: break;
+			}
+
+			cnt++;
+		}
+		diffuser_file_new << line << endl;
+	}
+	diffuser_file_new.close();
+	diffuser_file.close();
+}
+
 ncnn::Mat DiffusionSlover::randn_4(int seed)
 {
-	cv::Mat cv_x(cv::Size(size, size), CV_32FC4);
+	cv::Mat cv_x(cv::Size(w_size, h_size), CV_32FC4);
 	cv::RNG rng(seed);
 	rng.fill(cv_x, cv::RNG::NORMAL, 0, 1);
-	ncnn::Mat x_mat(size, size, 4, (void*)cv_x.data);
+	ncnn::Mat x_mat(w_size, h_size, 4, (void*)cv_x.data);
 	return x_mat.clone();
 }
 
@@ -176,7 +234,7 @@ ncnn::Mat DiffusionSlover::CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float s
 	for (int c = 0; c < 4; c++) {
 		float* u_ptr = denoised_uncond.channel(c);
 		float* c_ptr = denoised_cond.channel(c);
-		for (int hw = 0; hw < size * size; hw++) {
+		for (int hw = 0; hw < h_size * w_size; hw++) {
 			(*u_ptr) = (*u_ptr) + 7 * ((*c_ptr) - (*u_ptr));
 			u_ptr++;
 			c_ptr++;
@@ -224,7 +282,7 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 				float* x_ptr = x_mat.channel(c);
 				float* d_ptr = denoised.channel(c);
 				float* r_ptr = randn.channel(c);
-				for (int hw = 0; hw < size * size; hw++) {
+				for (int hw = 0; hw < h_size * w_size; hw++) {
 					*x_ptr = *x_ptr + ((*x_ptr - *d_ptr) / sigma[i]) * (sigma_down - sigma[i]) + *r_ptr * sigma_up;
 					x_ptr++;
 					d_ptr++;

@@ -18,11 +18,12 @@ using namespace std;
 
 int main()
 {
-	int size, mode, step, seed;
+	int height, width, mode, step, seed;
 	string positive_prompt, negative_prompt;
 
 	// default setting
-	size = 256;
+	height = 256;
+	width = 256;
 	mode = 0;
 	step = 15;
 	seed = 42;
@@ -38,16 +39,17 @@ int main()
 	else {
 		string content = "";
 		int i = 0;
-		for (i = 0; i < 6; i++) {
+		for (i = 0; i < 7; i++) {
 			if (getline(magic, content)) {
 				switch (i)
 				{
-				case 0:size = stoi(content);
-				case 1:mode = stoi(content);
-				case 2:step = stoi(content);
-				case 3:seed = stoi(content);
-				case 4:positive_prompt = content;
-				case 5:negative_prompt = content;
+				case 0:height = stoi(content);
+				case 1:width = stoi(content);
+				case 2:mode = stoi(content);
+				case 3:step = stoi(content);
+				case 4:seed = stoi(content);
+				case 5:positive_prompt = content;
+				case 6:negative_prompt = content;
 				default:break;
 				}
 			}
@@ -55,7 +57,7 @@ int main()
 				break;
 			}
 		}
-		if (i != 6) {
+		if (i != 7) {
 			cout << "magic.txt has wrong format, please fix it" << endl;
 			return 0;
 		}
@@ -69,8 +71,8 @@ int main()
 	// stable diffusion
 	cout << "----------------[init]--------------------";
 	PromptSlover prompt_slover;
-	DiffusionSlover diffusion_slover(size, mode);
-	DecodeSlover decode_slover(size);
+	DiffusionSlover diffusion_slover(height, width, mode);
+	DecodeSlover decode_slover(height, width);
 	printf(" %.2lfG / %.2lfG\n", getCurrentRSS() / 1024.0 / 1024.0 / 1024.0, getPeakRSS() / 1024.0 / 1024.0 / 1024.0);
 
 	cout << "----------------[prompt]------------------";
@@ -88,11 +90,11 @@ int main()
 	printf(" %.2lfG / %.2lfG\n", getCurrentRSS() / 1024.0 / 1024.0 / 1024.0, getPeakRSS() / 1024.0 / 1024.0 / 1024.0);
 
 	cout << "----------------[save]--------------------" << endl;
-	cv::Mat image(size, size, CV_8UC3);
+	cv::Mat image(height, width, CV_8UC3);
 	x_samples_ddim.to_pixels(image.data, ncnn::Mat::PIXEL_RGB2BGR);
-	cv::imwrite("result_" + to_string(step) + "_" + to_string(seed) + ".png", image);
+	cv::imwrite("result_" + to_string(step) + "_" + to_string(seed) + "_" + to_string(height) + "x" + to_string(width) + ".png", image);
 
 	cout << "----------------[close]-------------------" << endl;
-
+	
 	return 0;
 }

@@ -16,11 +16,12 @@ using namespace std;
 class DecodeSlover
 {
 public:
-    DecodeSlover(int s);
+    DecodeSlover(int h, int w);
 
     ncnn::Mat decode(ncnn::Mat sample);
 
 private:
+    void generate_param(int height, int width);
 
     const float factor[4] = { 5.48998f, 5.48998f, 5.48998f, 5.48998f };
 

@@ -17,11 +17,13 @@ using namespace std;
 class DiffusionSlover
 {
 public:
-    DiffusionSlover(int s, int mode);
+    DiffusionSlover(int h, int w, int mode);
 
     ncnn::Mat sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& uc);
 
 private:
+    void generate_param(int height, int width);
+
     ncnn::Mat randn_4(int seed);
     ncnn::Mat CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float sigma, ncnn::Mat cond, ncnn::Mat uncond);
 
@@ -30,5 +32,5 @@ private:
 
     ncnn::Net net;
 
-    int size;
+    int h_size, w_size;
 };
