@@ -34,7 +34,7 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 
 All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
 
-### x86 exe
+### x86 Windows
 1. enter folder [exe](./x86/exe)
 2. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
 3. set up your config in ```magic.txt```, each line are:
@@ -45,6 +45,25 @@ All models and exe file you can download from [百度网盘](https://pan.baidu.c
     5. positive prompt
     6. negative prompt
 4. run ```stable-diffusion.exe```
+
+### x86 Linux / MacOS
+
+1. [build and Install NCNN](https://github.com/Tencent/ncnn/wiki/how-to-build#pass-for-linux)
+2. build the demo with CMake
+
+```sh
+cd x86/linux
+mkdir -p build && cd build
+cmake ..
+make -j$(nproc)
+```
+
+3. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to `build/assets` folder
+4. run the demo
+
+```sh
+./stable-diffusion-ncnn
+```
 
 ### android apk
 1. download an install the apk from the link
@@ -69,9 +88,28 @@ Note: Please comply with the requirements of the SD model and do not use it for 
 
 ## Code Details
 
-### Complie for x86
+### Complie for x86 Windows
 1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
 2. open the vs2019 project and compile the release&x64
+
+### Complie for x86 Linux / MacOS
+
+1. [build and Install NCNN](https://github.com/Tencent/ncnn/wiki/how-to-build#pass-for-linux)
+2. build the demo with CMake
+
+```sh
+cd x86/linux
+mkdir -p build && cd build
+cmake ..
+make -j$(nproc)
+```
+
+3. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to `build/assets` folder
+4. run the demo
+
+```sh
+./stable-diffusion-ncnn
+```
 
 ### Compile for android
 1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
