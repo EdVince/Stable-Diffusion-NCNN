@@ -276,7 +276,7 @@ ncnn::Mat DiffusionSlover::sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& 
 			float sigma_up = min(sigma[i + 1], sqrt(sigma[i + 1] * sigma[i + 1] * (sigma[i] * sigma[i] - sigma[i + 1] * sigma[i + 1]) / (sigma[i] * sigma[i])));
 			float sigma_down = sqrt(sigma[i + 1] * sigma[i + 1] - sigma_up * sigma_up);
 
-			srand(time(NULL));
+			srand(time(NULL) + i);
 			ncnn::Mat randn = randn_4(rand() % 1000);
 			for (int c = 0; c < 4; c++) {
 				float* x_ptr = x_mat.channel(c);
