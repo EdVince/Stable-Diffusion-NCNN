@@ -1,0 +1,7 @@
+tmp
+build
+install
+cmake-build-debug
+.cache
+.vscode
+.idea
