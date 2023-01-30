@@ -19,16 +19,14 @@ class DiffusionSlover
 public:
     DiffusionSlover(int h, int w, int mode);
 
-    ncnn::Mat sampler(int seed, int step, ncnn::Mat& c, ncnn::Mat& uc);
+    ncnn::Mat sampler(int seed, int step, ncnn::Mat &c, ncnn::Mat &uc);
 
 private:
-    void generate_param(int height, int width);
-
     ncnn::Mat randn_4(int seed);
-    ncnn::Mat CFGDenoiser_CompVisDenoiser(ncnn::Mat& input, float sigma, ncnn::Mat cond, ncnn::Mat uncond);
+    ncnn::Mat CFGDenoiser_CompVisDenoiser(ncnn::Mat &input, float sigma, ncnn::Mat cond, ncnn::Mat uncond);
 
 private:
-    float log_sigmas[1000] = { 0 };
+    float log_sigmas[1000] = {0};
 
     ncnn::Net net;
 
