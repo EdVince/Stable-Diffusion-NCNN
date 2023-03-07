@@ -34,6 +34,8 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 
 All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
 
+If you only need ncnn model, you can search it from [硬件模型库-设备专用模型](https://platform.openmmlab.com/deploee), it would be more faster and free.
+
 ### x86 Windows
 1. enter folder [exe](./x86/exe)
 2. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
