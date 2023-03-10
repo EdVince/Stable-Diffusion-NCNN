@@ -13,20 +13,20 @@
 #include <time.h>
 using namespace std;
 
-class DecodeSlover
+class EncodeSlover
 {
 public:
-    DecodeSlover(int h, int w);
+    EncodeSlover(int h, int w);
 
-    ncnn::Mat decode(ncnn::Mat sample);
+    std::vector<ncnn::Mat> encode(cv::Mat& image);
 
 private:
     void generate_param(int height, int width);
 
-    const float factor[4] = { 1.0 / 0.18215f, 1.0 / 0.18215f, 1.0 / 0.18215f, 1.0 / 0.18215f };
-
-    const float _mean_[3] = { -1.0f, -1.0f, -1.0f };
-    const float _norm_[3] = { 127.5f, 127.5f, 127.5f };
+    const float _mean_[3] = { 127.5f, 127.5f, 127.5f };
+    const float _norm_[3] = { 1.0 / 127.5f, 1.0 / 127.5f, 1.0 / 127.5f };
 
     ncnn::Net net;
+
+    int h_size, w_size;
 };

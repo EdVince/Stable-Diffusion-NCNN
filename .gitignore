@@ -2,3 +2,4 @@
 *FrozenCLIPEmbedder-fp16.bin
 *UNetModel-fp16.bin
 *UNetModel-MHA-fp16.bin
+*AutoencoderKL-encoder-512-512-fp16.bin

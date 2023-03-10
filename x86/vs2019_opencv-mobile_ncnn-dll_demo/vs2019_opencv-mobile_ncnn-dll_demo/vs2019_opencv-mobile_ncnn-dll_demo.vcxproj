@@ -148,12 +148,14 @@
   <ItemGroup>
     <ClCompile Include="decoder_slover.cpp" />
     <ClCompile Include="diffusion_slover.cpp" />
+    <ClCompile Include="encoder_slover.cpp" />
     <ClCompile Include="prompt_slover.cpp" />
     <ClCompile Include="vs2019_opencv-mobile_ncnn-dll_demo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="decoder_slover.h" />
     <ClInclude Include="diffusion_slover.h" />
+    <ClInclude Include="encoder_slover.h" />
     <ClInclude Include="getmem.h" />
     <ClInclude Include="prompt_slover.h" />
   </ItemGroup>
