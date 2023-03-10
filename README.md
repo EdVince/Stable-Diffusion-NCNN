@@ -40,14 +40,16 @@ If you only need ncnn model, you can search it from [硬件模型库-设备专�
 
 ### x86 Windows
 1. enter folder [exe](./x86/exe)
-2. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
+2. download 4 bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin, AutoencoderKL-encoder-512-512-fp16.bin``` and put them to ```assets``` folder
 3. set up your config in ```magic.txt```, each line are:
-    1. resolution (only support 256 and 512)
-    2. speed mode (0 for slow but low ram, 1 for fast but high ram)
-    3. step number (15 is noe bad)
-    4. seed number (set 0 to be random)
-    5. positive prompt
-    6. negative prompt
+    1. height (must be a multiple of 128, minimum is 256)
+    2. width (must be a multiple of 128, minimum is 256)
+    3. speed mode (0 is slow but low ram, 1 is fast but high ram)
+    4. step number (15 is not bad)
+    5. seed number (set 0 to be random)
+    6. init image (if the file is exist, run img2img, if not, run txt2img)
+    7. positive prompt (describe what you want)
+    8. negative prompt (describe what you don't want)
 4. run ```stable-diffusion.exe```
 
 ### android apk
