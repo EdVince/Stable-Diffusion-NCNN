@@ -1,18 +1,20 @@
 # Stable Diffusion-NCNN
 
-Stable-Diffusion implemented by [ncnn](https://github.com/Tencent/ncnn) framework based on C++ 
+Stable-Diffusion implemented by [ncnn](https://github.com/Tencent/ncnn) framework based on C++, supported txt2img and img2img!
 
 Zhihu: https://zhuanlan.zhihu.com/p/582552276
 
 Video: https://www.bilibili.com/video/BV15g411x7Hc
 
-***Performance (time pre-it and ram)***
+***txt2img Performance (time pre-it and ram)***
 | per-it | i7-12700 (512x512)  | i7-12700 (256x256) | Snapdragon865 (256x256) |
 | ------ | ------------------- | ------------------ | ----------------------- |
 | slow   | 4.85s/5.24G(7.07G)  | 1.05s/3.58G(4.02G) | 1.6s/2.2G(2.6G)         |
 | fast   | 2.85s/9.47G(11.29G) | 0.65s/5.76G(6.20G) |                         |
 
 ## News
+
+2023-03-10: happy to add img2img
 
 2023-01-19: speed up & less ram in x86, dynamic shape in x86
 
@@ -32,7 +34,7 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 
 ## Out of box
 
-All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing)
+All models and exe file you can download from [百度网盘](https://pan.baidu.com/s/1Q_p0N3v7Y526Ht3JbxJ1XQ?pwd=6666) or [Google Drive](https://drive.google.com/drive/folders/1myB4uIQ2K5okl51XDbmYhetLF9rUyLZS?usp=sharing) or Release
 
 If you only need ncnn model, you can search it from [硬件模型库-设备专用模型](https://platform.openmmlab.com/deploee), it would be more faster and free.
 
@@ -48,25 +50,6 @@ If you only need ncnn model, you can search it from [硬件模型库-设备专�
     6. negative prompt
 4. run ```stable-diffusion.exe```
 
-### x86 Linux / MacOS
-
-1. [build and Install NCNN](https://github.com/Tencent/ncnn/wiki/how-to-build#pass-for-linux)
-2. build the demo with CMake
-
-```sh
-cd x86/linux
-mkdir -p build && cd build
-cmake ..
-make -j$(nproc)
-```
-
-3. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to `build/assets` folder
-4. run the demo
-
-```sh
-./stable-diffusion-ncnn
-```
-
 ### android apk
 1. download an install the apk from the link
 2. in the top, the first one is step and the second one is seed
@@ -79,8 +62,9 @@ Note: Please comply with the requirements of the SD model and do not use it for 
 
 1. Three main steps of Stable-Diffusion：
     1. CLIP: text-embedding
-    2. iterative sampling with sampler
-    3. decode the sampler results to obtain output images
+    2. (only img2img) encode the init image to init latent
+    3. iterative sampling with sampler
+    4. decode the sampler results to obtain output images
 2. Model details：
     1. Weights：Naifu (u know where to find)
     2. Sampler：Euler ancestral (k-diffusion version)
@@ -91,7 +75,7 @@ Note: Please comply with the requirements of the SD model and do not use it for 
 ## Code Details
 
 ### Complie for x86 Windows
-1. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to ```assets``` folder
+1. download 4 bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin, AutoencoderKL-encoder-512-512-fp16.bin``` and put them to ```assets``` folder
 2. open the vs2019 project and compile the release&x64
 
 ### Complie for x86 Linux / MacOS
@@ -106,7 +90,7 @@ cmake ..
 make -j$(nproc)
 ```
 
-3. download three bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to `build/assets` folder
+3. download 3 bin file: ```AutoencoderKL-fp16.bin, FrozenCLIPEmbedder-fp16.bin, UNetModel-MHA-fp16.bin``` and put them to `build/assets` folder
 4. run the demo
 
 ```sh
@@ -160,4 +144,5 @@ outout = in0 + onnx(x=in0 * c_in, t=in1, cc=in2) * c_out
 3. [stable-diffusion](https://github.com/CompVis/stable-diffusion)
 4. [k-diffusion](https://github.com/crowsonkb/k-diffusion)
 5. [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
-
+6. [diffusers](https://github.com/huggingface/diffusers)
+7. [diffusers-ncnn](https://github.com/EdVince/diffusers-ncnn)
