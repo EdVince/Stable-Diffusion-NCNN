@@ -14,7 +14,9 @@ Video: https://www.bilibili.com/video/BV15g411x7Hc
 
 ## News
 
-2023-03-10: happy to add img2img
+2023-03-11: happy to add img2img android and release new apk
+
+2023-03-10: happy to add img2img x86
 
 2023-01-19: speed up & less ram in x86, dynamic shape in x86
 
