@@ -17,7 +17,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +32,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class MainActivity extends Activity
@@ -38,7 +45,9 @@ public class MainActivity extends Activity
     private EditText stepText;
     private EditText seedText;
 
-    private Makeup makeup = new Makeup();
+    private Bitmap showBitmap;
+
+    private StableDiffusion sd = new StableDiffusion();
     /** Called when the activity is first created. */
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,10 +65,10 @@ public class MainActivity extends Activity
         copy(MainActivity.this, name1, path, name1);
         String file1 = path+File.separator+name1;
 
-        boolean ret_init = makeup.Init(getAssets(), file, file1);
+        boolean ret_init = sd.Init(getAssets(), file, file1);
         if (!ret_init)
         {
-            Log.e("MainActivity", "makeup Init failed");
+            Log.e("MainActivity", "SD Init failed");
         }
 
         imageView = (ImageView) findViewById(R.id.resView);
@@ -68,10 +77,20 @@ public class MainActivity extends Activity
         stepText = (EditText) findViewById(R.id.step);
         seedText = (EditText) findViewById(R.id.seed);
 
-        final Bitmap showBitmap = Bitmap.createBitmap(256,256,Bitmap.Config.ARGB_8888);
+        showBitmap = Bitmap.createBitmap(256,256,Bitmap.Config.ARGB_8888);
 
-        Button buttonDetect = (Button) findViewById(R.id.go);
-        buttonDetect.setOnClickListener(new View.OnClickListener() {
+        Button buttonInitImage = (Button) findViewById(R.id.init);
+        buttonInitImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(Intent.ACTION_PICK);
+                i.setType("image/*");
+                startActivityForResult(i, 1);
+            }
+        });
+
+        Button buttonTXT2IMG = (Button) findViewById(R.id.txt2img);
+        buttonTXT2IMG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -83,7 +102,8 @@ public class MainActivity extends Activity
                         int step = Integer.valueOf(stepText.getText().toString());
                         int seed = Integer.valueOf(seedText.getText().toString());
 
-                        makeup.Process(showBitmap,step,seed,postivaePrompt,negativePrompt);
+                        sd.txt2imgProcess(showBitmap,step,seed,postivaePrompt,negativePrompt);
+
                         final Bitmap styledImage = showBitmap.copy(Bitmap.Config.ARGB_8888,true);
                         imageView.post(new Runnable() {
                             public void run() {
@@ -96,6 +116,55 @@ public class MainActivity extends Activity
             }
         });
 
+        Button buttonIMG2IMG = (Button) findViewById(R.id.img2img);
+        buttonIMG2IMG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                new Thread(new Runnable() {
+                    public void run() {
+
+                        String postivaePrompt = positivePromptText.getText().toString();
+                        String negativePrompt = negativePromptText.getText().toString();
+                        int step = Integer.valueOf(stepText.getText().toString());
+                        int seed = Integer.valueOf(seedText.getText().toString());
+
+                        sd.img2imgProcess(showBitmap,step,seed,postivaePrompt,negativePrompt);
+
+                        final Bitmap styledImage = showBitmap.copy(Bitmap.Config.ARGB_8888,true);
+                        imageView.post(new Runnable() {
+                            public void run() {
+                                imageView.setImageBitmap(styledImage);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK && null != data) {
+                    Uri selectedImage = data.getData();
+                    try {
+                        final Bitmap tmp = decodeUri(selectedImage);
+                        showBitmap = Bitmap.createScaledBitmap(tmp,256,256,false);
+                        imageView.setImageBitmap(showBitmap);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void copy(Context myContext, String ASSETS_NAME, String savePath, String saveName) {
@@ -118,5 +187,61 @@ public class MainActivity extends Activity
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException
+    {
+        // Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
+
+        // The new size we want to scale to
+        final int REQUIRED_SIZE = 256;
+
+        // Find the correct scale value. It should be the power of 2.
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp / 2 < REQUIRED_SIZE
+                    || height_tmp / 2 < REQUIRED_SIZE) {
+                break;
+            }
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+
+        // Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o2);
+
+        // Rotate according to EXIF
+        int rotate = 0;
+        try
+        {
+            ExifInterface exif = new ExifInterface(getContentResolver().openInputStream(selectedImage));
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotate = 270;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotate = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotate = 90;
+                    break;
+            }
+        }
+        catch (IOException e)
+        {
+            Log.e("MainActivity", "ExifInterface IOException");
+        }
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotate);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }

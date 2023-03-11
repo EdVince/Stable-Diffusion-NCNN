@@ -10,10 +10,11 @@
         android:layout_height="wrap_content">
 
         <Button
-        android:id="@+id/go"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CPU" />
+            android:id="@+id/init"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="open" />
 
         <EditText
             android:id="@+id/step"
@@ -21,8 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Setp"
             android:inputType="textPersonName"
-            android:text="2" />
+            android:text="15" />
 
         <EditText
             android:id="@+id/seed"
@@ -30,10 +32,41 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Seed"
             android:inputType="textPersonName"
             android:text="42" />
 
+        <Button
+            android:id="@+id/txt2img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="txt2img" />
+
+        <Button
+            android:id="@+id/img2img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="img2img" />
+
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/pos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Positive Prompt (using default)"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/neg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Negative Prompt (using default)"
+        android:inputType="textPersonName" />
 
     <ImageView
         android:id="@+id/resView"
@@ -41,21 +74,5 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:background="#FFFFFF" />
-
-    <EditText
-        android:id="@+id/pos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="positive prompt" />
-
-    <EditText
-        android:id="@+id/neg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="negative prompt" />
 
 </LinearLayout>

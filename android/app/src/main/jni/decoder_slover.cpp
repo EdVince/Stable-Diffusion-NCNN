@@ -15,10 +15,8 @@ int DecodeSlover::load(AAssetManager* mgr)
 	net.opt.use_packing_layout = true;
 	net.opt.num_threads = ncnn::get_big_cpu_count();
 
-	int ret0 = net.load_param(mgr,"AutoencoderKL-256-fp16-opt.param");
-	int ret1 = net.load_model(mgr,"AutoencoderKL-fp16.bin");
-
-	__android_log_print(ANDROID_LOG_ERROR, "SD", "%d,%d", ret0,ret1);
+	net.load_param(mgr,"AutoencoderKL-256-fp16-opt.param");
+	net.load_model(mgr,"AutoencoderKL-fp16.bin");
 
 	return 0;
 }

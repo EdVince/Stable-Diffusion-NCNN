@@ -31,6 +31,7 @@
 #include "prompt_slover.h"
 #include "diffusion_slover.h"
 #include "decoder_slover.h"
+#include "encoder_slover.h"
 
 static std::string UTF16StringToUTF8String(const char16_t* chars, size_t len) {
     std::u16string u16_string(chars, len);
@@ -53,6 +54,7 @@ std::string JavaStringToString(JNIEnv* env, jstring str) {
 }
 
 static PromptSlover prompt_slover;
+static EncodeSlover encode_slover;
 static DiffusionSlover diffusion_slover;
 static DecodeSlover decode_slover;
 extern "C" {
@@ -70,7 +72,7 @@ JNIEXPORT void JNI_OnUnload(JavaVM* vm, void* reserved)
 }
 
 // public native boolean Init(AssetManager mgr);
-JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_Makeup_Init(JNIEnv* env, jobject thiz, jobject assetManager, jstring jvocab, jstring jbin)
+JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_StableDiffusion_Init(JNIEnv* env, jobject thiz, jobject assetManager, jstring jvocab, jstring jbin)
 {
     AAssetManager* mgr = AAssetManager_fromJava(env, assetManager);
 
@@ -85,11 +87,13 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_Makeup_Init(JNIEnv* env, jobj
     if(decode_slover.load(mgr) < 0)
         return JNI_FALSE;
 
+    if(encode_slover.load(mgr) < 0)
+        return JNI_FALSE;
+
     return JNI_TRUE;
 }
 
-// public native Bitmap StyleTransfer(Bitmap bitmap, int style_type, boolean use_gpu);
-JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_Makeup_Process(JNIEnv* env, jobject thiz, jobject show_bitmap, jint jstep, jint jseed, jstring jpositivePromptText, jstring jnegativePrompt)
+JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_StableDiffusion_txt2imgProcess(JNIEnv* env, jobject thiz, jobject show_bitmap, jint jstep, jint jseed, jstring jpositivePromptText, jstring jnegativePrompt)
 {
     AndroidBitmapInfo info;
     AndroidBitmap_getInfo(env, show_bitmap, &info);
@@ -109,13 +113,47 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_Makeup_Process(JNIEnv* env, j
     ncnn::Mat cond = prompt_slover.get_conditioning(positive_prompt);
     ncnn::Mat uncond = prompt_slover.get_conditioning(negative_prompt);
 
-    ncnn::Mat sample = diffusion_slover.sampler(seed, step, cond, uncond);
+    ncnn::Mat sample = diffusion_slover.sampler_txt2img(seed, step, cond, uncond);
 
     ncnn::Mat x_samples_ddim = decode_slover.decode(sample);
 
     x_samples_ddim.to_android_bitmap(env,show_bitmap,ncnn::Mat::PIXEL_RGB);
 
-    __android_log_print(ANDROID_LOG_ERROR, "SD", "ok");
+    cv::Mat image(256, 256, CV_8UC3);
+    x_samples_ddim.to_pixels(image.data, ncnn::Mat::PIXEL_RGB);
+
+    return JNI_TRUE;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_tencent_makeup_StableDiffusion_img2imgProcess(JNIEnv* env, jobject thiz, jobject show_bitmap, jint jstep, jint jseed, jstring jpositivePromptText, jstring jnegativePrompt)
+{
+    AndroidBitmapInfo info;
+    AndroidBitmap_getInfo(env, show_bitmap, &info);
+    if (info.format != ANDROID_BITMAP_FORMAT_RGBA_8888)
+        return JNI_FALSE;
+
+    int step = jstep;
+    int seed = jseed;
+    std::string positive_prompt = "" + JavaStringToString(env,jpositivePromptText);
+    std::string negative_prompt = "" + JavaStringToString(env,jnegativePrompt);
+    if (positive_prompt == "" || negative_prompt == "")
+    {
+        positive_prompt = "floating hair, portrait, ((loli)), ((one girl)), cute face, hidden hands, asymmetrical bangs, beautiful detailed eyes, eye shadow, hair ornament, ribbons, bowties, buttons, pleated skirt, (((masterpiece))), ((best quality)), colorful";
+        negative_prompt = "((part of the head)), ((((mutated hands and fingers)))), deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, Octane renderer, lowres, bad anatomy, bad hands, text";
+    }
+    ncnn::Mat init_image = ncnn::Mat::from_android_bitmap(env, show_bitmap, ncnn::Mat::PIXEL_RGB);
+
+
+    ncnn::Mat cond = prompt_slover.get_conditioning(positive_prompt);
+    ncnn::Mat uncond = prompt_slover.get_conditioning(negative_prompt);
+
+    vector<ncnn::Mat> init_latents = encode_slover.encode(init_image);
+
+    ncnn::Mat sample = diffusion_slover.sampler_img2img(seed, step, cond, uncond, init_latents);
+
+    ncnn::Mat x_samples_ddim = decode_slover.decode(sample);
+
+    x_samples_ddim.to_android_bitmap(env,show_bitmap,ncnn::Mat::PIXEL_RGB);
 
     cv::Mat image(256, 256, CV_8UC3);
     x_samples_ddim.to_pixels(image.data, ncnn::Mat::PIXEL_RGB);

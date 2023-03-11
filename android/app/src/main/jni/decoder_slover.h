@@ -23,7 +23,7 @@ public:
 
 private:
 
-    const float factor[4] = { 5.48998f, 5.48998f, 5.48998f, 5.48998f };
+    const float factor[4] = { 1.0 / 0.18215f, 1.0 / 0.18215f, 1.0 / 0.18215f, 1.0 / 0.18215f };
 
     const float _mean_[3] = { -1.0f, -1.0f, -1.0f };
     const float _norm_[3] = { 127.5f, 127.5f, 127.5f };
