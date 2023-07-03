@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DependenciesPlatform Condition="'$(Platform)'=='ARM64'">arm64</DependenciesPlatform>
+    <DependenciesPlatform Condition="'$(Platform)'=='Win32'">x86</DependenciesPlatform>
+    <DependenciesPlatform Condition="'$(Platform)'=='x64'">x64</DependenciesPlatform>
+    <IncludePath>$(MSBuildThisFileDirectory)Include\Platform\$(DependenciesPlatform)\;$(MSBuildThisFileDirectory)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MSBuildThisFileDirectory)Lib\$(DependenciesPlatform)\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)Redist\$(PlatformTarget)\*.*" />
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>ncnn.lib;%(AdditionalDependencies);</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

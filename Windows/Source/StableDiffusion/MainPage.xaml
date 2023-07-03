@@ -1,0 +1,104 @@
+﻿<Page
+  x:Class="StableDiffusion.MainPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d">
+  <Grid Margin="8">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="5*" />
+    </Grid.ColumnDefinitions>
+    <Grid Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <StackPanel>
+        <TextBlock Text="Resolution (Width x Height)" />
+        <Grid HorizontalAlignment="Left">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBox
+            x:Name="WidthTextBox"
+            Grid.Column="0"
+            BeforeTextChanging="NaturalNumberTextBoxBeforeTextChanging" />
+          <TextBlock
+            Grid.Column="1"
+            Margin="4,0"
+            VerticalAlignment="Center"
+            Text="X" />
+          <TextBox
+            x:Name="HeightTextBox"
+            Grid.Column="2"
+            BeforeTextChanging="NaturalNumberTextBoxBeforeTextChanging" />
+        </Grid>
+        <CheckBox x:Name="FastModeCheckBox" Content="Fast Mode (Need more RAM)" />
+        <TextBlock Text="Step" />
+        <TextBox x:Name="StepTextBox" BeforeTextChanging="NaturalNumberTextBoxBeforeTextChanging" />
+        <TextBlock Text="Seed" />
+        <TextBox x:Name="SeedTextBox" BeforeTextChanging="IntegerNumberTextBoxBeforeTextChanging" />
+        <TextBlock Text="Input Image" />
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+          </Grid.ColumnDefinitions>
+          <TextBox
+            x:Name="InputImageFileNameTextBox"
+            Grid.Column="0"
+            IsReadOnly="True"
+            PlaceholderText="Please use &quot;...&quot; button to select the input image file." />
+          <Button
+            x:Name="InputImageFileNameBrowseButton"
+            Grid.Column="1"
+            Click="InputImageFileNameBrowseButtonClickHandler"
+            Content="..." />
+        </Grid>
+        <TextBlock Text="Positive Prompt" />
+        <TextBox x:Name="PositivePromptTextBox" TextWrapping="Wrap" />
+        <TextBlock Text="Negative Prompt" />
+        <TextBox x:Name="NegativePromptTextBox" TextWrapping="Wrap" />
+        <Button
+          x:Name="GenerateButton"
+          Click="GenerateButtonClickHandler"
+          Content="Generate" />
+      </StackPanel>
+      <TextBox
+        x:Name="GenerateOutputLoggingTextBox"
+        Grid.Row="1"
+        AcceptsReturn="True"
+        IsReadOnly="True"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
+        TextWrapping="Wrap" />
+      <TextBlock Grid.Row="2" Padding="0,4">
+        <Run Text="GUI version created by" />
+        <Hyperlink NavigateUri="https://github.com/MouriNaruto">https://github.com/MouriNaruto</Hyperlink>
+        <LineBreak />
+        <Run Text="Project at" />
+        <Hyperlink NavigateUri="https://github.com/EdVince/Stable-Diffusion-NCNN">https://github.com/EdVince/Stable-Diffusion-NCNN</Hyperlink>
+        <LineBreak />
+        <Run Text="Powered by" />
+        <Hyperlink NavigateUri="https://github.com/Tencent/ncnn">https://github.com/Tencent/ncnn</Hyperlink>
+      </TextBlock>
+    </Grid>
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <Image x:Name="GeneratedImageViewer" Grid.Row="0" />
+      <Button
+        x:Name="SaveImageButton"
+        Grid.Row="1"
+        Click="SaveImageButtonClickHandler"
+        Content="Save Image"
+        IsEnabled="False" />
+    </Grid>
+  </Grid>
+</Page>
